@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <color name="photo_mask">#88000000</color>
     <color name="dark_gray">#FF343535</color>
 
-    <color name="temp_notification">#9e9e9f</color>
-    <color name="temp_white">#FFFFFFFe</color>
-    <color name="temp_separation">#FFDCDCDd</color>
-
-    <color name="step_background">@color/yancy_grey200</color>
-
-    <color name="chartlet_color">#FFE1B3</color>
-
     <!--状态栏颜色-->
-    <color name="notification">@color/yancy_grey500</color>
-    <!-- 主题橙色 -->
-    <color name="theme">#ff9900</color>
-    <!-- 淡主题橙色 -->
-    <color name="theme_light">@color/yancy_orange300</color>
-    <!-- 深主题橙色 -->
-    <color name="theme_dark">@color/yancy_orange700</color>
-    <!-- 次主题巧克力色 -->
-    <color name="theme_brown">#882e00</color>
-    <!-- 选项按下的颜色 -->
-    <color name="option_color">#FFF5F5F5</color>
-
+    <color name="notification">#9e9e9e</color>
 
     <!--背景-->
     <color name="background">#f7eee3</color>
@@ -35,10 +14,6 @@
     <color name="text_gray">#FF999999</color>
     <!--正常字体-->
     <color name="text_color">#FF333333</color>
-    <!--浅灰字体-->
-    <color name="text_light_gray">#FFE0E0E0</color>
-    <!--搜索栏背景色-->
-    <color name="search_background">#E6E6DC</color>
 
 
     <!-- 常用颜色 -->
