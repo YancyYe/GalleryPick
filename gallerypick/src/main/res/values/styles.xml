@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="GalleryBaseTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+
+
+    <style name="GalleryTheme" parent="GalleryBaseTheme" />
+
+
+    <style name="galleryBtnBackground" parent="GalleryBaseTheme">
+        <item name="android:background">@null</item>
+    </style>
+
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvGalleryMiniImage"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:overScrollMode="never" />
+
+    <View
+        android:id="@+id/vGalleryLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rvGalleryMiniImage"
+        android:background="@color/separation" />
+
+    <Button
+        android:id="@+id/btnGallery"
+        style="@style/galleryBtnBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/vGalleryLine"
+        android:text="@string/gallery_gallery"
+        android:textColor="@color/yancy_lightblue500" />
+
+    <Button
+        android:id="@+id/btnGallerySend"
+        style="@style/galleryBtnBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/vGalleryLine"
+        android:text="@string/gallery_send"
+        android:textColor="@color/yancy_lightblue500" />
+
+
+</RelativeLayout>

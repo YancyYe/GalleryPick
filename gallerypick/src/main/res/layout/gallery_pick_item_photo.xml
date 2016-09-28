@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivGalleryPhotoImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0.5dp"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@mipmap/gallery_pick_photo" />
+
+    <View
+        android:id="@+id/vGalleryPhotoMask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0.5dp"
+        android:background="@color/photo_mask"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/chkGalleryPhotoSelector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:button="@mipmap/gallery_pick_select_unchecked"
+        android:contentDescription="@null" />
+
+
+</RelativeLayout>
