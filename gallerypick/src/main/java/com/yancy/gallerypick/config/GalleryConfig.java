@@ -12,6 +12,7 @@ public class GalleryConfig {
 
     private ImageLoader imageLoader;    // 图片加载器
 
+
     private boolean multiSelect;        // 是否开启多选  默认 ： false
     private int maxSize;                // 配置开启多选时 最大可选择的图片数量。   默认：9
 

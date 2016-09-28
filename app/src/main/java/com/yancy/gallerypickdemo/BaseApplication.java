@@ -17,7 +17,9 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        
+
+
+
 
         GalleryConfig galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new ImageLoader())
