@@ -7,7 +7,7 @@ package com.yancy.gallerypick.activity;
 public class Text {
 
     private final static String TAG = "Text";
-
+12313
 
 
 
