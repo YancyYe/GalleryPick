@@ -30,6 +30,7 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/tvFinish"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"

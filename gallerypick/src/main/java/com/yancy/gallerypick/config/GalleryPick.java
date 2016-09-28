@@ -41,13 +41,14 @@ public class GalleryPick {
         }
         mContext = context;
 
-        Intent intent = new Intent(context, GalleryPickActivity.class);
-        context.startActivity(intent);
+        Intent intent = new Intent(mContext, GalleryPickActivity.class);
+        mContext.startActivity(intent);
     }
 
 
-    public void setGalleryConfig(GalleryConfig galleryConfig) {
+    public GalleryPick setGalleryConfig(GalleryConfig galleryConfig) {
         this.galleryConfig = galleryConfig;
+        return this;
     }
 
     public GalleryConfig getGalleryConfig() {

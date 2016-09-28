@@ -45,6 +45,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfoList.get(position).path, holder.ivPhotoImage);
+
+        if (!galleryConfig.isMultiSelect()){
+            holder.chkPhotoSelector.setVisibility(View.GONE);
+        }
+
     }
 
 

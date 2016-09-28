@@ -14,11 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.yancy.gallerypick.R;
 import com.yancy.gallerypick.adapter.PhotoAdapter;
 import com.yancy.gallerypick.bean.FolderInfo;
 import com.yancy.gallerypick.bean.PhotoInfo;
+import com.yancy.gallerypick.config.GalleryConfig;
+import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.utils.UIUtils;
 
 import java.io.File;
@@ -36,8 +39,9 @@ public class GalleryPickActivity extends BaseActivity {
     private Intent mIntent = null;
     private final static String TAG = "GalleryPickActivity";
 
-    private LinearLayout btnGalleryPickBack;
-    private RecyclerView rvGalleryImage;
+    private TextView tvFinish;                  // 完成按钮
+    private LinearLayout btnGalleryPickBack;    // 返回按钮
+    private RecyclerView rvGalleryImage;        // 图片列表
 
     private PhotoAdapter photoAdapter;
 
@@ -49,6 +53,8 @@ public class GalleryPickActivity extends BaseActivity {
 
     private boolean hasFolderScan = false;           // 是否扫描过
 
+    private GalleryConfig galleryConfig;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +64,7 @@ public class GalleryPickActivity extends BaseActivity {
         mContext = this;
         mActivity = this;
 
-
         UIUtils.hideTitleBar(mActivity, R.id.ll_gallery_pick_main);
-
 
         initView();
         init();
@@ -73,6 +77,7 @@ public class GalleryPickActivity extends BaseActivity {
      * 初始化视图
      */
     private void initView() {
+        tvFinish = (TextView) super.findViewById(R.id.tvFinish);
         btnGalleryPickBack = (LinearLayout) super.findViewById(R.id.btnGalleryPickBack);
         rvGalleryImage = (RecyclerView) super.findViewById(R.id.rvGalleryImage);
     }
@@ -92,6 +97,13 @@ public class GalleryPickActivity extends BaseActivity {
         rvGalleryImage.setLayoutManager(gridLayoutManager);
         photoAdapter = new PhotoAdapter(mActivity, mContext, photoInfoList);
         rvGalleryImage.setAdapter(photoAdapter);
+
+        galleryConfig = GalleryPick.getInstance().getGalleryConfig();
+
+        if (!galleryConfig.isMultiSelect()) {
+            tvFinish.setVisibility(View.GONE);
+        }
+
 
     }
 

@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="0.5dp"
-        android:background="@color/photo_mask"
+        android:background="@color/gallery_photo_mask"
         android:visibility="gone" />
 
     <CheckBox
