@@ -39,21 +39,24 @@ public class GalleryPickActivity extends BaseActivity {
     private Intent mIntent = null;
     private final static String TAG = "GalleryPickActivity";
 
+    public static String EXTRA_RESULT = "select_result";        // 返回Stirng
+    private ArrayList<String> resultPhoto;
+
     private TextView tvFinish;                  // 完成按钮
     private LinearLayout btnGalleryPickBack;    // 返回按钮
     private RecyclerView rvGalleryImage;        // 图片列表
 
-    private PhotoAdapter photoAdapter;
+    private PhotoAdapter photoAdapter;              // 图片适配器
 
-    private List<FolderInfo> folderInfoList = new ArrayList<>();
-    private List<PhotoInfo> photoInfoList = new ArrayList<>();
+    private List<FolderInfo> folderInfoList = new ArrayList<>();    // 本地文件夹信息List
+    private List<PhotoInfo> photoInfoList = new ArrayList<>();      // 本地图片信息List
 
     private static final int LOADER_ALL = 0;         // 获取所有图片
     private static final int LOADER_CATEGORY = 1;    // 获取某个文件夹中的所有图片
 
     private boolean hasFolderScan = false;           // 是否扫描过
 
-    private GalleryConfig galleryConfig;
+    private GalleryConfig galleryConfig;   // GalleryPick 配置器
 
 
     @Override
@@ -86,9 +89,16 @@ public class GalleryPickActivity extends BaseActivity {
      * 初始化
      */
     private void init() {
+        galleryConfig = GalleryPick.getInstance().getGalleryConfig();
+
+        resultPhoto = galleryConfig.getPathList();
+
+        tvFinish.setText(getString(R.string.gallery_finish, resultPhoto.size(), galleryConfig.getMaxSize()));
+
         btnGalleryPickBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(RESULT_CANCELED);
                 exit();
             }
         });
@@ -96,13 +106,37 @@ public class GalleryPickActivity extends BaseActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
         rvGalleryImage.setLayoutManager(gridLayoutManager);
         photoAdapter = new PhotoAdapter(mActivity, mContext, photoInfoList);
+        photoAdapter.setOnCallBack(new PhotoAdapter.OnCallBack() {
+            @Override
+            public void OnClick(List<String> selectPhotoList) {
+                tvFinish.setText(getString(R.string.gallery_finish, selectPhotoList.size(), galleryConfig.getMaxSize()));
+
+                resultPhoto.clear();
+                resultPhoto.addAll(selectPhotoList);
+
+            }
+        });
+        photoAdapter.setSelectPhoto(resultPhoto);
         rvGalleryImage.setAdapter(photoAdapter);
 
-        galleryConfig = GalleryPick.getInstance().getGalleryConfig();
 
         if (!galleryConfig.isMultiSelect()) {
             tvFinish.setVisibility(View.GONE);
         }
+
+
+        tvFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (resultPhoto != null && resultPhoto.size() > 0) {
+                    mIntent = new Intent();
+                    mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
+                    setResult(RESULT_OK, mIntent);
+                    exit();
+                }
+
+            }
+        });
 
 
     }

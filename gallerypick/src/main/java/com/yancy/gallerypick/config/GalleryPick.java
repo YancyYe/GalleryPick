@@ -30,7 +30,7 @@ public class GalleryPick {
     }
 
 
-    public void open(Context context) {
+    public void open(Activity activity) {
         if (galleryPick.galleryConfig == null) {
             Log.e(TAG, "请配置 GalleryConfig");
             return;
@@ -39,10 +39,11 @@ public class GalleryPick {
             Log.e(TAG, "请配置 ImageLoader");
             return;
         }
-        mContext = context;
+        mActivity = activity;
+        mContext = mActivity;
 
-        Intent intent = new Intent(mContext, GalleryPickActivity.class);
-        mContext.startActivity(intent);
+        Intent intent = new Intent(mActivity, GalleryPickActivity.class);
+        mActivity.startActivityForResult(intent, galleryConfig.getRequestCode());
     }
 
 

@@ -24,13 +24,20 @@
         android:textSize="16sp" />
 
     <Switch
-        android:id="@+id/isShowCamera"
+        android:id="@+id/swShowCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etMulMaxSize"
         android:checked="true"
         android:text="@string/isShowCamera"
         android:textSize="16sp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvResultPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn"
+        android:layout_below="@+id/swShowCamera" />
 
     <Button
         android:id="@+id/btn"

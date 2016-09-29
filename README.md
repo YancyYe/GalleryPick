@@ -1,4 +1,4 @@
-# GalleryPick ͼƬѡ����
-�����ع��С������� �����ڴ�������
+﻿# GalleryPick 图片选择器
+代码重构中。。。。 敬请期待。。。
 
-Դ��Ŀ��ַ��https://github.com/YancyYe/ImageSelector
+旧项目地址：https://github.com/YancyYe/ImageSelector

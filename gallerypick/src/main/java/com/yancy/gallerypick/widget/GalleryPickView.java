@@ -1,6 +1,7 @@
 package com.yancy.gallerypick.widget;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import java.util.List;
 public class GalleryPickView extends RelativeLayout {
 
     private Context context;
+    private Activity activity;
     private final static String TAG = "GalleryPickView";
 
     private List<PhotoInfo> photoInfoList = new ArrayList<>();
@@ -72,7 +74,7 @@ public class GalleryPickView extends RelativeLayout {
         btnGallery.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                GalleryPick.getInstance().open(context);
+                GalleryPick.getInstance().open(activity);
             }
         });
         RecyclerView rvMiniImage = (RecyclerView) galleryPickView.findViewById(R.id.rvGalleryMiniImage);
@@ -85,7 +87,7 @@ public class GalleryPickView extends RelativeLayout {
     }
 
     public void init(FragmentActivity fragmentActivity) {
-
+        activity = fragmentActivity;
         miniPhotoAdapter.setmActivity(fragmentActivity);
 
 
