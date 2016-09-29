@@ -66,9 +66,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         final ViewHolder viewHolder = (ViewHolder) holder;
         galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfo.path, viewHolder.ivPhotoImage);
-        if (!galleryConfig.isMultiSelect()) {
-            viewHolder.chkPhotoSelector.setVisibility(View.GONE);
-        }
 
         if (selectPhoto.contains(photoInfo.path)) {
             viewHolder.chkPhotoSelector.setChecked(true);
@@ -80,10 +77,22 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             viewHolder.vPhotoMask.setVisibility(View.GONE);
         }
 
+        if (!galleryConfig.isMultiSelect()) {
+            viewHolder.chkPhotoSelector.setVisibility(View.GONE);
+            viewHolder.vPhotoMask.setVisibility(View.GONE);
+        }
+
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!galleryConfig.isMultiSelect()) {
+                    selectPhoto.clear();
+                    selectPhoto.add(photoInfo.path);
+                    onCallBack.OnClick(selectPhoto);
+                    return;
+                }
+
                 if (selectPhoto.contains(photoInfo.path)) {
                     selectPhoto.remove(photoInfo.path);
                     viewHolder.chkPhotoSelector.setChecked(false);

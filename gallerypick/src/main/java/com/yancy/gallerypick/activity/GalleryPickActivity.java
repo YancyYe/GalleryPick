@@ -114,6 +114,15 @@ public class GalleryPickActivity extends BaseActivity {
                 resultPhoto.clear();
                 resultPhoto.addAll(selectPhotoList);
 
+                if (!galleryConfig.isMultiSelect()){
+                    if (resultPhoto != null && resultPhoto.size() > 0) {
+                        mIntent = new Intent();
+                        mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
+                        setResult(RESULT_OK, mIntent);
+                        exit();
+                    }
+                }
+
             }
         });
         photoAdapter.setSelectPhoto(resultPhoto);
