@@ -15,7 +15,7 @@ public class GalleryConfig {
     private boolean multiSelect;        // 是否开启多选  默认 ： false
     private int maxSize;                // 配置开启多选时 最大可选择的图片数量。   默认：9
 
-    private boolean isShowCamera;       // 是否开启相机 默认：false
+    private boolean isShowCamera;       // 是否开启相机 默认：true
 
     private GalleryConfig(Builder builder) {
         this.imageLoader = builder.imageLoader;
@@ -32,7 +32,7 @@ public class GalleryConfig {
         private boolean multiSelect = false;
         private int maxSize = 9;
 
-        private boolean isShowCamera = false;
+        private boolean isShowCamera = true;
 
 
         public Builder imageLoader(ImageLoader imageLoader) {
@@ -40,13 +40,13 @@ public class GalleryConfig {
             return this;
         }
 
-        public Builder multiSelect() {
-            this.multiSelect = true;
+        public Builder multiSelect(boolean multiSelect) {
+            this.multiSelect = multiSelect;
             return this;
         }
 
-        public Builder multiSelect(int maxSize) {
-            this.multiSelect = true;
+        public Builder multiSelect(boolean multiSelect, int maxSize) {
+            this.multiSelect = multiSelect;
             this.maxSize = maxSize;
             return this;
         }

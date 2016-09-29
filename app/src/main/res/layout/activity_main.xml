@@ -6,21 +6,37 @@
     android:orientation="vertical"
     tools:context="com.yancy.gallerypickdemo.MainActivity">
 
-    <TextView
+    <Switch
+        android:id="@+id/swMulSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:text="@string/isMulSelect"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/etMulMaxSize"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/yellow" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/swMulSelect"
+        android:hint="@string/mulMaxSize"
+        android:inputType="number"
+        android:textSize="16sp" />
+
+    <Switch
+        android:id="@+id/isShowCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etMulMaxSize"
+        android:checked="true"
+        android:text="@string/isShowCamera"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
-    <com.yancy.gallerypick.widget.GalleryPickView
-        android:id="@+id/galleryPickView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:text="@string/open" />
 
 </RelativeLayout>

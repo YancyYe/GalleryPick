@@ -1,57 +1,49 @@
 package com.yancy.gallerypickdemo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
-import com.yancy.gallerypick.widget.GalleryPickView;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private Button btn;
-    private GalleryPickView galleryPickView;
+    private Switch swMulSelect;
+    private Switch isShowCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn = (Button) super.findViewById(R.id.btn);
-        galleryPickView = (GalleryPickView) super.findViewById(R.id.galleryPickView);
-
-
-
-
-        Activity activity = this;
-
-
-
+        initView();
         init();
+    }
 
+    private void initView() {
+        btn = (Button) super.findViewById(R.id.btn);
+        swMulSelect = (Switch) super.findViewById(R.id.swMulSelect);
+        isShowCamera = (Switch) super.findViewById(R.id.isShowCamera);
     }
 
     private void init() {
 
-        final GalleryConfig galleryConfig = new GalleryConfig.Builder()
-                .imageLoader(new ImageLoader())
-                .multiSelect()
-                .build();
-
-//        GalleryPick.getInstance().setGalleryConfig(galleryConfig);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GalleryConfig galleryConfig = new GalleryConfig.Builder()
+                        .imageLoader(new ImageLoader())
+                        .multiSelect(swMulSelect.isChecked())
+                        .isShowCamera(isShowCamera.isChecked())
+                        .build();
                 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(MainActivity.this);
             }
         });
-
-//        galleryPickView.init(this);
 
 
     }

@@ -20,7 +20,7 @@ import java.util.List;
  * 列表中图片的适配器
  * Created by Yancy on 2016/1/27.
  */
-public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
+public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
     private Activity mActivity;
@@ -30,6 +30,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     private GalleryConfig galleryConfig = GalleryPick.getInstance().getGalleryConfig();
 
+    private final static int HEAD = 0;
+    private final static int ITEM = 1;
+
     public PhotoAdapter(Activity mActivity, Context mContext, List<PhotoInfo> photoInfoList) {
         mLayoutInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
@@ -38,22 +41,39 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == HEAD) {
+            return new HeadHolder(mLayoutInflater.inflate(R.layout.gallery_pick_item_camera, parent, false));
+        }
         return new ViewHolder(mLayoutInflater.inflate(R.layout.gallery_pick_item_photo, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfoList.get(position).path, holder.ivPhotoImage);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (!galleryConfig.isMultiSelect()){
-            holder.chkPhotoSelector.setVisibility(View.GONE);
+        if (getItemViewType(position) == HEAD) {
+            return;
         }
+
+        PhotoInfo photoInfo;
+        if (galleryConfig.isShowCamera()) {
+            photoInfo = photoInfoList.get(position - 1);
+        } else {
+            photoInfo = photoInfoList.get(position);
+        }
+        ViewHolder viewHolder = (ViewHolder) holder;
+        galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfo.path, viewHolder.ivPhotoImage);
+        if (!galleryConfig.isMultiSelect()) {
+            viewHolder.chkPhotoSelector.setVisibility(View.GONE);
+        } else {
+
+        }
+
 
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    private class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivPhotoImage;
         private View vPhotoMask;
         private CheckBox chkPhotoSelector;
@@ -64,9 +84,23 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
             vPhotoMask = itemView.findViewById(R.id.vGalleryPhotoMask);
             chkPhotoSelector = (CheckBox) itemView.findViewById(R.id.chkGalleryPhotoSelector);
         }
-
     }
 
+
+    private class HeadHolder extends RecyclerView.ViewHolder {
+
+        private HeadHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (galleryConfig.isShowCamera() && position == 0) {
+            return HEAD;
+        }
+        return ITEM;
+    }
 
     @Override
     public int getItemCount() {
