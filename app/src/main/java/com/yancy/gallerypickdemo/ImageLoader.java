@@ -15,7 +15,7 @@ public class ImageLoader implements com.yancy.gallerypick.inter.ImageLoader {
     @Override
     public void displayImage(Activity activity, Context context, String path, ImageView imageView) {
 
-        Glide.with(context)
+        Glide.with(activity)
                 .load(path)
                 .placeholder(R.mipmap.gallery_pick_photo)
                 .centerCrop()

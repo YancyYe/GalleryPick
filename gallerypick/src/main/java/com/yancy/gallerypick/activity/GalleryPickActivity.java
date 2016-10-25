@@ -111,6 +111,8 @@ public class GalleryPickActivity extends BaseActivity {
             public void OnClick(List<String> selectPhotoList) {
                 tvFinish.setText(getString(R.string.gallery_finish, selectPhotoList.size(), galleryConfig.getMaxSize()));
 
+
+
                 resultPhoto.clear();
                 resultPhoto.addAll(selectPhotoList);
 
