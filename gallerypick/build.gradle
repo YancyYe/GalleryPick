@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='cn.yancy.utils'
+group='com.github.Yancy'
 
 version = "1.0.0"
 
