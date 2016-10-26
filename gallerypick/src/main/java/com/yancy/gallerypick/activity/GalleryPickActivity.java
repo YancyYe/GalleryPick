@@ -68,7 +68,7 @@ public class GalleryPickActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery_pick_main);
+        setContentView(R.layout.gallery_main);
 
         mContext = this;
         mActivity = this;
@@ -101,7 +101,7 @@ public class GalleryPickActivity extends BaseActivity {
 
         resultPhoto = galleryConfig.getPathList();
 
-        tvFinish.setText(getString(R.string.GalleryPick_finish, resultPhoto.size(), galleryConfig.getMaxSize()));
+        tvFinish.setText(getString(R.string.gallery_finish, resultPhoto.size(), galleryConfig.getMaxSize()));
 
         btnGalleryPickBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +125,7 @@ public class GalleryPickActivity extends BaseActivity {
 
             @Override
             public void OnClickPhoto(List<String> selectPhotoList) {
-                tvFinish.setText(getString(R.string.GalleryPick_finish, selectPhotoList.size(), galleryConfig.getMaxSize()));
+                tvFinish.setText(getString(R.string.gallery_finish, selectPhotoList.size(), galleryConfig.getMaxSize()));
 
                 resultPhoto.clear();
                 resultPhoto.addAll(selectPhotoList);
@@ -260,7 +260,7 @@ public class GalleryPickActivity extends BaseActivity {
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
             startActivityForResult(cameraIntent, REQUEST_CAMERA);
         } else {
-            Toast.makeText(mContext, R.string.GalleryPick_msg_no_camera, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.gallery_msg_no_camera, Toast.LENGTH_SHORT).show();
         }
     }
 

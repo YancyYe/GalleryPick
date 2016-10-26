@@ -4,20 +4,20 @@
     android:id="@+id/ll_gallery_pick_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/gallery_blue"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".activity.GalleryPickActivity">
 
-    <include layout="@layout/gallery_pick_title" />
+    <include layout="@layout/gallery_title" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvGalleryImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:background="@color/gallery_white" />
 
 
 </LinearLayout>

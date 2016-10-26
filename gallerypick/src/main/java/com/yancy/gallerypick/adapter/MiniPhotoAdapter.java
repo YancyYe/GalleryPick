@@ -38,7 +38,7 @@ public class MiniPhotoAdapter extends RecyclerView.Adapter<MiniPhotoAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mLayoutInflater.inflate(R.layout.gallery_pick_mini_item, parent, false));
+        return new ViewHolder(mLayoutInflater.inflate(R.layout.gallery_mini_item, parent, false));
     }
 
     @Override

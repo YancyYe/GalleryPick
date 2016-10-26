@@ -68,7 +68,7 @@ public class GalleryPickView extends RelativeLayout {
     }
 
     private void init() {
-        View galleryPickView = LayoutInflater.from(context).inflate(R.layout.gallery_pick_mini, this, true);
+        View galleryPickView = LayoutInflater.from(context).inflate(R.layout.gallery_mini, this, true);
 
         btnGallery = (Button) galleryPickView.findViewById(R.id.btnGallery);
         btnGallery.setOnClickListener(new OnClickListener() {
