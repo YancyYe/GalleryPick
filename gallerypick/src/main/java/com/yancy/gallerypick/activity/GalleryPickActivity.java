@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.LoaderManager;
@@ -15,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yancy.gallerypick.R;
 import com.yancy.gallerypick.adapter.PhotoAdapter;
@@ -22,6 +24,7 @@ import com.yancy.gallerypick.bean.FolderInfo;
 import com.yancy.gallerypick.bean.PhotoInfo;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
+import com.yancy.gallerypick.utils.FileUtils;
 import com.yancy.gallerypick.utils.UIUtils;
 
 import java.io.File;
@@ -58,6 +61,8 @@ public class GalleryPickActivity extends BaseActivity {
 
     private GalleryConfig galleryConfig;   // GalleryPick 配置器
 
+    private static final int REQUEST_CAMERA = 100;   // 设置拍摄照片的 REQUEST_CODE
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +98,7 @@ public class GalleryPickActivity extends BaseActivity {
 
         resultPhoto = galleryConfig.getPathList();
 
-        tvFinish.setText(getString(R.string.gallery_finish, resultPhoto.size(), galleryConfig.getMaxSize()));
+        tvFinish.setText(getString(R.string.GalleryPick_finish, resultPhoto.size(), galleryConfig.getMaxSize()));
 
         btnGalleryPickBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,15 +113,20 @@ public class GalleryPickActivity extends BaseActivity {
         photoAdapter = new PhotoAdapter(mActivity, mContext, photoInfoList);
         photoAdapter.setOnCallBack(new PhotoAdapter.OnCallBack() {
             @Override
-            public void OnClick(List<String> selectPhotoList) {
-                tvFinish.setText(getString(R.string.gallery_finish, selectPhotoList.size(), galleryConfig.getMaxSize()));
+            public void OnClickCamera(List<String> selectPhotoList) {
+                resultPhoto.clear();
+                resultPhoto.addAll(selectPhotoList);
+                showCameraAction();
+            }
 
-
+            @Override
+            public void OnClickPhoto(List<String> selectPhotoList) {
+                tvFinish.setText(getString(R.string.GalleryPick_finish, selectPhotoList.size(), galleryConfig.getMaxSize()));
 
                 resultPhoto.clear();
                 resultPhoto.addAll(selectPhotoList);
 
-                if (!galleryConfig.isMultiSelect()){
+                if (!galleryConfig.isMultiSelect()) {
                     if (resultPhoto != null && resultPhoto.size() > 0) {
                         mIntent = new Intent();
                         mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
@@ -126,6 +136,7 @@ public class GalleryPickActivity extends BaseActivity {
                 }
 
             }
+
         });
         photoAdapter.setSelectPhoto(resultPhoto);
         rvGalleryImage.setAdapter(photoAdapter);
@@ -233,6 +244,49 @@ public class GalleryPickActivity extends BaseActivity {
         getSupportLoaderManager().restartLoader(LOADER_ALL, null, mLoaderCallback);   // 扫描手机中的图片
     }
 
+
+    private File tempFile;
+
+    /**
+     * 选择相机
+     */
+    private void showCameraAction() {
+        // 跳转到系统照相机
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (cameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
+            // 设置系统相机拍照后的输出路径
+            // 创建临时文件
+            tempFile = FileUtils.createTmpFile(mActivity, galleryConfig.getFilePath());
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
+            startActivityForResult(cameraIntent, REQUEST_CAMERA);
+        } else {
+            Toast.makeText(mContext, R.string.GalleryPick_msg_no_camera, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CAMERA) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (tempFile != null) {
+                    mIntent = new Intent();
+                    if (!galleryConfig.isMultiSelect()){
+                        resultPhoto.clear();
+                    }
+                    resultPhoto.add(tempFile.getAbsolutePath());
+                    mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
+                    setResult(RESULT_OK, mIntent);
+                    exit();
+                }
+            } else {
+                if (tempFile != null && tempFile.exists()) {
+                    tempFile.delete();
+                }
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     /**
      * 退出

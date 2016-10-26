@@ -19,6 +19,13 @@ public class FileUtils {
     private final static String PATTERN = "yyyyMMddHHmmss";    // 时间戳命名
 
 
+    /**
+     * 创建文件
+     *
+     * @param context  context
+     * @param filePath 文件路径
+     * @return file
+     */
     public static File createTmpFile(Context context, String filePath) {
 
         String timeStamp = new SimpleDateFormat(PATTERN, Locale.CHINA).format(new Date());
@@ -40,6 +47,11 @@ public class FileUtils {
     }
 
 
+    /**
+     * 创建初始文件夹。保存拍摄图片和裁剪后的图片
+     *
+     * @param filePath 文件夹路径
+     */
     public static void createFile(String filePath) {
         String externalStorageState = Environment.getExternalStorageState();
 
@@ -51,7 +63,7 @@ public class FileUtils {
                 cropFile.mkdirs();
             }
 
-            File file = new File(dir, ".nomedia");
+            File file = new File(cropFile, ".nomedia");    // 创建忽视文件。   有该文件，系统将检索不到此文件夹下的图片。
             if (!file.exists()) {
                 try {
                     file.createNewFile();

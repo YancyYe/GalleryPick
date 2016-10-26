@@ -55,6 +55,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (getItemViewType(position) == HEAD) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCallBack.OnClickCamera(selectPhoto);
+                }
+            });
             return;
         }
 
@@ -89,7 +95,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 if (!galleryConfig.isMultiSelect()) {
                     selectPhoto.clear();
                     selectPhoto.add(photoInfo.path);
-                    onCallBack.OnClick(selectPhoto);
+                    onCallBack.OnClickPhoto(selectPhoto);
                     return;
                 }
 
@@ -107,7 +113,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     viewHolder.chkPhotoSelector.setButtonDrawable(R.mipmap.gallery_pick_select_checked);
                     viewHolder.vPhotoMask.setVisibility(View.VISIBLE);
                 }
-                onCallBack.OnClick(selectPhoto);
+                onCallBack.OnClickPhoto(selectPhoto);
             }
         });
 
@@ -158,7 +164,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public interface OnCallBack {
-        void OnClick(List<String> selectPhoto);
+        void OnClickPhoto(List<String> selectPhoto);
+
+        void OnClickCamera(List<String> selectPhoto);
     }
 
     public void setOnCallBack(OnCallBack onCallBack) {

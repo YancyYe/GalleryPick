@@ -25,7 +25,7 @@
         android:drawablePadding="5dp"
         android:drawableRight="@mipmap/gallery_pick_dropdown_white"
         android:gravity="center"
-        android:text="@string/gallery_all_folder"
+        android:text="@string/GalleryPick_all_folder"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
@@ -36,7 +36,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="5dp"
         android:gravity="center"
-        android:text="@string/gallery_finish"
+        android:text="@string/GalleryPick_finish"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

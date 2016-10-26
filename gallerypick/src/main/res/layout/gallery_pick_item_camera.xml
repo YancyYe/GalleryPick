@@ -13,7 +13,7 @@
         android:drawablePadding="5dp"
         android:drawableTop="@mipmap/gallery_pick_camera"
         android:gravity="center"
-        android:text="@string/gallery_shoot"
+        android:text="@string/GalleryPick_shoot"
         android:textColor="@color/gallery_text_gray"
         android:textSize="14sp" />
 </LinearLayout>

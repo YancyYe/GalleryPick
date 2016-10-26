@@ -1,7 +1,9 @@
 <resources>
-    <string name="gallery_all_folder">所有图片</string>
-    <string name="gallery_shoot">拍摄照片</string>
-    <string name="gallery_finish">( %1$d / %2$d )完成</string>
-    <string name="gallery_gallery">相册</string>
-    <string name="gallery_send">发送</string>
+    <string name="GalleryPick_all_folder">所有图片</string>
+    <string name="GalleryPick_shoot">拍摄照片</string>
+    <string name="GalleryPick_finish">( %1$d / %2$d )完成</string>
+    <string name="GalleryPick_gallery">相册</string>
+    <string name="GalleryPick_send">发送</string>
+    <string name="GalleryPick_msg_no_camera">没有系统相机</string>
+
 </resources>

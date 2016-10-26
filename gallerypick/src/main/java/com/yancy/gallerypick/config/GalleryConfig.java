@@ -1,6 +1,7 @@
 package com.yancy.gallerypick.config;
 
 import com.yancy.gallerypick.inter.ImageLoader;
+import com.yancy.gallerypick.utils.FileUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ public class GalleryConfig {
     private boolean multiSelect;        // 是否开启多选  默认 ： false
     private int maxSize;                // 配置开启多选时 最大可选择的图片数量。   默认：9
     private boolean isShowCamera;       // 是否开启相机 默认：true
+    private String filePath;            // 拍照以及截图后 存放的位置。    默认：/Gallery/Pictures
     private ArrayList<String> pathList;      // 已选择照片的路径
 
-    private int REQUEST_CODE;           // 返回的code标识， 默认 800
+    private int REQUEST_CODE;           // 返回的code标识， 默认： 800
 
     private GalleryConfig(Builder builder) {
         this.imageLoader = builder.imageLoader;
@@ -28,6 +30,9 @@ public class GalleryConfig {
         this.isShowCamera = builder.isShowCamera;
         this.REQUEST_CODE = builder.REQUEST_CODE;
         this.pathList = builder.pathList;
+        this.filePath = builder.filePath;
+
+        FileUtils.createFile(this.filePath);
     }
 
 
@@ -38,6 +43,7 @@ public class GalleryConfig {
         private boolean multiSelect = false;
         private int maxSize = 9;
         private boolean isShowCamera = true;
+        private String filePath = "/Gallery/Pictures";
         private ArrayList<String> pathList = new ArrayList<>();
 
         private int REQUEST_CODE = 800;
@@ -70,6 +76,11 @@ public class GalleryConfig {
 
         public Builder requestCode(int REQUEST_CODE) {
             this.REQUEST_CODE = REQUEST_CODE;
+            return this;
+        }
+
+        public Builder filePath(String filePath) {
+            this.filePath = filePath;
             return this;
         }
 
@@ -109,6 +120,10 @@ public class GalleryConfig {
 
     public ArrayList<String> getPathList() {
         return pathList;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 }
 /*

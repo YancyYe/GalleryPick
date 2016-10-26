@@ -12,15 +12,21 @@ import com.bumptech.glide.Glide;
  */
 public class ImageLoader implements com.yancy.gallerypick.inter.ImageLoader {
 
+
     @Override
     public void displayImage(Activity activity, Context context, String path, ImageView imageView) {
 
-        Glide.with(activity)
+        Glide.with(context)
                 .load(path)
                 .placeholder(R.mipmap.gallery_pick_photo)
                 .centerCrop()
                 .into(imageView);
 
+    }
+
+    @Override
+    public void onDestroy(Activity activity, Context context) {
+        Glide.get(activity).clearMemory();
     }
 }
 /*

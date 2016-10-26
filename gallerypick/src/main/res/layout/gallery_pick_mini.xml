@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_below="@+id/vGalleryLine"
-        android:text="@string/gallery_gallery"
+        android:text="@string/GalleryPick_gallery"
         android:textColor="@color/yancy_lightblue500" />
 
     <Button
@@ -34,7 +34,7 @@
         android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/vGalleryLine"
-        android:text="@string/gallery_send"
+        android:text="@string/GalleryPick_send"
         android:textColor="@color/yancy_lightblue500" />
 
 
