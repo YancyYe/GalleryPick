@@ -1,7 +1,6 @@
 package com.yancy.gallerypick.config;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
@@ -18,9 +17,6 @@ public class GalleryPick {
     private static GalleryPick galleryPick;
 
     private GalleryConfig galleryConfig;
-    private Activity mActivity;
-    private Context mContext;
-
 
     public static GalleryPick getInstance() {
         if (galleryPick == null) {
@@ -39,11 +35,12 @@ public class GalleryPick {
             Log.e(TAG, "请配置 ImageLoader");
             return;
         }
-        mActivity = activity;
-        mContext = mActivity;
-
-        Intent intent = new Intent(mActivity, GalleryPickActivity.class);
-        mActivity.startActivityForResult(intent, galleryConfig.getRequestCode());
+        if (galleryPick.galleryConfig.getIHandlerCallBack() == null) {
+            Log.e(TAG, "请配置 IHandlerCallBack");
+            return;
+        }
+        Intent intent = new Intent(activity, GalleryPickActivity.class);
+        activity.startActivity(intent);
     }
 
 
@@ -56,13 +53,6 @@ public class GalleryPick {
         return galleryConfig;
     }
 
-    public Activity getmActivity() {
-        return mActivity;
-    }
-
-    public Context getmContext() {
-        return mContext;
-    }
 }
 /*
  *   ┏┓　　　┏┓

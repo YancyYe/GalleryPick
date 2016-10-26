@@ -13,7 +13,7 @@ import java.io.Serializable;
 public interface ImageLoader extends Serializable {
     void displayImage(Activity activity, Context context, String path, ImageView imageView);
 
-    void onDestroy(Activity activity, Context context);
+    void clearMemoryCache();
 }
 /*
  *   ┏┓　　　┏┓

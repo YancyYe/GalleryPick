@@ -25,8 +25,7 @@ public class ImageLoader implements com.yancy.gallerypick.inter.ImageLoader {
     }
 
     @Override
-    public void onDestroy(Activity activity, Context context) {
-        Glide.get(activity).clearMemory();
+    public void clearMemoryCache() {
     }
 }
 /*

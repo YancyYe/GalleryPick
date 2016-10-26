@@ -24,6 +24,7 @@ import com.yancy.gallerypick.bean.FolderInfo;
 import com.yancy.gallerypick.bean.PhotoInfo;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
+import com.yancy.gallerypick.inter.IHandlerCallBack;
 import com.yancy.gallerypick.utils.FileUtils;
 import com.yancy.gallerypick.utils.UIUtils;
 
@@ -39,10 +40,8 @@ public class GalleryPickActivity extends BaseActivity {
 
     private Context mContext = null;
     private Activity mActivity = null;
-    private Intent mIntent = null;
     private final static String TAG = "GalleryPickActivity";
 
-    public static String EXTRA_RESULT = "select_result";        // 返回Stirng
     private ArrayList<String> resultPhoto;
 
     private TextView tvFinish;                  // 完成按钮
@@ -62,6 +61,8 @@ public class GalleryPickActivity extends BaseActivity {
     private GalleryConfig galleryConfig;   // GalleryPick 配置器
 
     private static final int REQUEST_CAMERA = 100;   // 设置拍摄照片的 REQUEST_CODE
+
+    private IHandlerCallBack mHandlerCallBack;   // GalleryPick 生命周期接口
 
 
     @Override
@@ -95,6 +96,8 @@ public class GalleryPickActivity extends BaseActivity {
      */
     private void init() {
         galleryConfig = GalleryPick.getInstance().getGalleryConfig();
+        mHandlerCallBack = galleryConfig.getIHandlerCallBack();
+        mHandlerCallBack.onStart();
 
         resultPhoto = galleryConfig.getPathList();
 
@@ -104,6 +107,7 @@ public class GalleryPickActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
+                mHandlerCallBack.onCancel();
                 exit();
             }
         });
@@ -128,9 +132,7 @@ public class GalleryPickActivity extends BaseActivity {
 
                 if (!galleryConfig.isMultiSelect()) {
                     if (resultPhoto != null && resultPhoto.size() > 0) {
-                        mIntent = new Intent();
-                        mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
-                        setResult(RESULT_OK, mIntent);
+                        mHandlerCallBack.onSuccess(resultPhoto);
                         exit();
                     }
                 }
@@ -151,9 +153,7 @@ public class GalleryPickActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (resultPhoto != null && resultPhoto.size() > 0) {
-                    mIntent = new Intent();
-                    mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
-                    setResult(RESULT_OK, mIntent);
+                    mHandlerCallBack.onSuccess(resultPhoto);
                     exit();
                 }
 
@@ -269,13 +269,11 @@ public class GalleryPickActivity extends BaseActivity {
         if (requestCode == REQUEST_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
                 if (tempFile != null) {
-                    mIntent = new Intent();
-                    if (!galleryConfig.isMultiSelect()){
+                    if (!galleryConfig.isMultiSelect()) {
                         resultPhoto.clear();
                     }
                     resultPhoto.add(tempFile.getAbsolutePath());
-                    mIntent.putStringArrayListExtra(EXTRA_RESULT, resultPhoto);
-                    setResult(RESULT_OK, mIntent);
+                    mHandlerCallBack.onSuccess(resultPhoto);
                     exit();
                 }
             } else {
@@ -292,6 +290,7 @@ public class GalleryPickActivity extends BaseActivity {
      * 退出
      */
     private void exit() {
+        mHandlerCallBack.onFinish();
         finish();
     }
 
@@ -300,6 +299,7 @@ public class GalleryPickActivity extends BaseActivity {
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            mHandlerCallBack.onCancel();
             exit();
         }
         return true;
