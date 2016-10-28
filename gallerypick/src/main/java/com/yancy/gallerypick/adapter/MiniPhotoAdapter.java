@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 
 import com.yancy.gallerypick.R;
 import com.yancy.gallerypick.bean.PhotoInfo;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
+import com.yancy.gallerypick.utils.ScreenUtils;
+import com.yancy.gallerypick.widget.GalleryImageView;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class MiniPhotoAdapter extends RecyclerView.Adapter<MiniPhotoAdapter.ViewHolder> {
 
-    private Context context;
+    private Context mContext;
     private Activity mActivity;
     private LayoutInflater mLayoutInflater;
     private List<PhotoInfo> photoInfoList;
@@ -32,7 +33,7 @@ public class MiniPhotoAdapter extends RecyclerView.Adapter<MiniPhotoAdapter.View
 
     public MiniPhotoAdapter(Context context, List<PhotoInfo> photoInfoList) {
         mLayoutInflater = LayoutInflater.from(context);
-        this.context = context;
+        this.mContext = context;
         this.photoInfoList = photoInfoList;
     }
 
@@ -43,7 +44,7 @@ public class MiniPhotoAdapter extends RecyclerView.Adapter<MiniPhotoAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        galleryConfig.getImageLoader().displayImage(mActivity, context, photoInfoList.get(position).path, holder.ivPhotoImage);
+        galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfoList.get(position).path, holder.ivPhotoImage, ScreenUtils.getScreenWidth(mContext), ScreenUtils.getScreenWidth(mContext));
     }
 
     @Override
@@ -53,12 +54,12 @@ public class MiniPhotoAdapter extends RecyclerView.Adapter<MiniPhotoAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView ivPhotoImage;
+        private GalleryImageView ivPhotoImage;
         private CheckBox chkPhotoSelector;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ivPhotoImage = (ImageView) itemView.findViewById(R.id.ivGalleryPhotoImage);
+            ivPhotoImage = (GalleryImageView) itemView.findViewById(R.id.ivGalleryPhotoImage);
             chkPhotoSelector = (CheckBox) itemView.findViewById(R.id.chkGalleryPhotoSelector);
         }
 

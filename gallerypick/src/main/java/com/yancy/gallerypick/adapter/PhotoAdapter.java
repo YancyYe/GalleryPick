@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 
 import com.yancy.gallerypick.R;
 import com.yancy.gallerypick.bean.PhotoInfo;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
+import com.yancy.gallerypick.utils.ScreenUtils;
+import com.yancy.gallerypick.widget.GalleryImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +75,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             photoInfo = photoInfoList.get(position);
         }
         final ViewHolder viewHolder = (ViewHolder) holder;
-        galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfo.path, viewHolder.ivPhotoImage);
+        galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfo.path, viewHolder.ivPhotoImage, ScreenUtils.getScreenWidth(mContext) / 3, ScreenUtils.getScreenWidth(mContext) / 3);
+
+        // 设置 每个imageView 的大小
+        ViewGroup.LayoutParams params = viewHolder.ivPhotoImage.getLayoutParams();
+        params.height = ScreenUtils.getScreenWidth(mContext) / 3;
+        params.width = ScreenUtils.getScreenWidth(mContext) / 3;
+        viewHolder.ivPhotoImage.setLayoutParams(params);
+
 
         if (selectPhoto.contains(photoInfo.path)) {
             viewHolder.chkPhotoSelector.setChecked(true);
@@ -128,13 +136,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
      * 照片的 Holder
      */
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivPhotoImage;
+        private GalleryImageView ivPhotoImage;
         private View vPhotoMask;
         private CheckBox chkPhotoSelector;
 
         private ViewHolder(View itemView) {
             super(itemView);
-            ivPhotoImage = (ImageView) itemView.findViewById(R.id.ivGalleryPhotoImage);
+            ivPhotoImage = (GalleryImageView) itemView.findViewById(R.id.ivGalleryPhotoImage);
             vPhotoMask = itemView.findViewById(R.id.vGalleryPhotoMask);
             chkPhotoSelector = (CheckBox) itemView.findViewById(R.id.chkGalleryPhotoSelector);
         }

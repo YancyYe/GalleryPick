@@ -14,6 +14,7 @@ import android.widget.Switch;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;
+import com.yancy.gallerypickdemo.loader.FrescoImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     private PhotoAdapter photoAdapter;
 
-    private final int GALLERY_CODE = 20;
-
     private List<String> path = new ArrayList<>();
 
     private GalleryConfig galleryConfig;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
         initGallery();
         init();
+
     }
 
     private void initView() {
@@ -61,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 galleryConfig = new GalleryConfig.Builder()
-                        .imageLoader(new ImageLoader())
+                        .imageLoader(new FrescoImageLoader(MainActivity.this))
                         .iHandlerCallBack(iHandlerCallBack)
                         .multiSelect(swMulSelect.isChecked())
                         .isShowCamera(isShowCamera.isChecked())
@@ -80,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         rvResultPhoto.setAdapter(photoAdapter);
 
     }
-
 
 
     private void initGallery() {

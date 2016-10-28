@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.yancy.gallerypick.widget.GalleryImageView
         android:id="@+id/ivGalleryPhotoImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,11 +23,11 @@
 
     <CheckBox
         android:id="@+id/chkGalleryPhotoSelector"
-        android:clickable="false"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:button="@mipmap/gallery_pick_select_unchecked"
+        android:clickable="false"
         android:contentDescription="@null" />
 
 

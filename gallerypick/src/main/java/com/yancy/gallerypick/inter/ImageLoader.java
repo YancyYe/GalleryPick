@@ -2,7 +2,8 @@ package com.yancy.gallerypick.inter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.widget.ImageView;
+
+import com.yancy.gallerypick.widget.GalleryImageView;
 
 import java.io.Serializable;
 
@@ -11,7 +12,7 @@ import java.io.Serializable;
  * Created by Yancy on 2016/1/27.
  */
 public interface ImageLoader extends Serializable {
-    void displayImage(Activity activity, Context context, String path, ImageView imageView);
+    void displayImage(Activity activity, Context context, String path, GalleryImageView galleryImageView, int width, int height);
 
     void clearMemoryCache();
 }

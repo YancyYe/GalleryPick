@@ -1,31 +1,33 @@
-package com.yancy.gallerypickdemo;
+package com.yancy.gallerypickdemo.loader;
 
 import android.app.Activity;
 import android.content.Context;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.yancy.gallerypick.inter.ImageLoader;
+import com.yancy.gallerypick.widget.GalleryImageView;
+import com.yancy.gallerypickdemo.R;
 
 /**
- * 自定义图片加载框架 防止OOM
- * Created by Yancy on 2016/1/27.
+ * GlideImageLoader
+ * Created by Yancy on 2016/10/28.
  */
-public class ImageLoader implements com.yancy.gallerypick.inter.ImageLoader {
+public class GlideImageLoader implements ImageLoader {
 
+    private final static String TAG = "GlideImageLoader";
 
     @Override
-    public void displayImage(Activity activity, Context context, String path, ImageView imageView) {
-
+    public void displayImage(Activity activity, Context context, String path, GalleryImageView galleryImageView, int width, int height) {
         Glide.with(context)
                 .load(path)
                 .placeholder(R.mipmap.gallery_pick_photo)
                 .centerCrop()
-                .into(imageView);
-
+                .into(galleryImageView);
     }
 
     @Override
     public void clearMemoryCache() {
+
     }
 }
 /*
