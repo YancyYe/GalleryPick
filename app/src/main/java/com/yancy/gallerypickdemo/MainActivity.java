@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s) && Integer.valueOf(s.toString()) > 0) {
-                    galleryConfig.getBuilder().maxSize(Integer.valueOf(s.toString()));
+                    galleryConfig.getBuilder().maxSize(Integer.valueOf(s.toString())).build();
                 }
             }
         });
