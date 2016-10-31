@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class GalleryConfig {
 
+    private static final String TAG = "GalleryConfig";
+
     private ImageLoader imageLoader;    // 图片加载器
     private IHandlerCallBack iHandlerCallBack;   // GalleryPick 生命周期接口
 
@@ -23,21 +25,18 @@ public class GalleryConfig {
     private String filePath;            // 拍照以及截图后 存放的位置。    默认：/Gallery/Pictures
     private ArrayList<String> pathList;      // 已选择照片的路径
 
+    private Builder builder;
+
 
     private GalleryConfig(Builder builder) {
-        this.imageLoader = builder.imageLoader;
-        this.iHandlerCallBack = builder.iHandlerCallBack;
-        this.multiSelect = builder.multiSelect;
-        this.maxSize = builder.maxSize;
-        this.isShowCamera = builder.isShowCamera;
-        this.pathList = builder.pathList;
-        this.filePath = builder.filePath;
-
+        setBuilder(builder);
         FileUtils.createFile(this.filePath);
     }
 
 
     public static class Builder implements Serializable {
+
+        private static GalleryConfig galleryConfig;
 
         private ImageLoader imageLoader;
         private IHandlerCallBack iHandlerCallBack;
@@ -92,11 +91,14 @@ public class GalleryConfig {
             return this;
         }
 
-
         public GalleryConfig build() {
-            return new GalleryConfig(this);
+            if (galleryConfig == null) {
+                galleryConfig = new GalleryConfig(this);
+            } else {
+                galleryConfig.setBuilder(this);
+            }
+            return galleryConfig;
         }
-
 
     }
 
@@ -126,6 +128,21 @@ public class GalleryConfig {
 
     public IHandlerCallBack getIHandlerCallBack() {
         return iHandlerCallBack;
+    }
+
+    public Builder getBuilder() {
+        return builder;
+    }
+
+    private void setBuilder(Builder builder) {
+        this.imageLoader = builder.imageLoader;
+        this.iHandlerCallBack = builder.iHandlerCallBack;
+        this.multiSelect = builder.multiSelect;
+        this.maxSize = builder.maxSize;
+        this.isShowCamera = builder.isShowCamera;
+        this.pathList = builder.pathList;
+        this.filePath = builder.filePath;
+        this.builder = builder;
     }
 }
 /*

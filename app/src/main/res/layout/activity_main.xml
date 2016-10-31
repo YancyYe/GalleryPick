@@ -33,12 +33,41 @@
         android:text="@string/isShowCamera"
         android:textSize="16sp" />
 
+    <RadioGroup
+        android:id="@+id/rgImageLoader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/swShowCamera"
+        android:checkedButton="@+id/rbGlide"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbGlide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Glide" />
+
+        <RadioButton
+            android:id="@+id/rbPicasso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Picasso" />
+
+        <RadioButton
+            android:id="@+id/rbFresco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Fresco" />
+
+
+    </RadioGroup>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvResultPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn"
-        android:layout_below="@+id/swShowCamera" />
+        android:layout_below="@+id/rgImageLoader" />
 
     <Button
         android:id="@+id/btn"
