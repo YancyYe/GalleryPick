@@ -1,7 +1,13 @@
 package com.yancy.gallerypickdemo;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
@@ -31,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = "---Yancy---";
     private Context mContext;
+    private Activity mActivity;
 
     private Button btn;
     private Switch swMulSelect;
@@ -47,12 +55,15 @@ public class MainActivity extends AppCompatActivity {
     private GalleryConfig galleryConfig;
     private IHandlerCallBack iHandlerCallBack;
 
+    private final int PERMISSIONS_REQUEST_READ_CONTACTS = 8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mContext = this;
+        mActivity = this;
 
         initView();
         initGallery();
@@ -69,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         rgImageLoader = (RadioGroup) super.findViewById(R.id.rgImageLoader);
     }
 
+
     private void init() {
 
         galleryConfig = new GalleryConfig.Builder()
@@ -80,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(MainActivity.this);
+                initPermissions();
             }
         });
 
@@ -115,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (!TextUtils.isEmpty(s) && Integer.valueOf(s.toString()) > 0) {
-                    galleryConfig.getBuilder().maxSize(Integer.valueOf(s.toString()));
+                    galleryConfig.getBuilder().maxSize(Integer.valueOf(s.toString())).build();
                 }
             }
         });
@@ -142,6 +154,35 @@ public class MainActivity extends AppCompatActivity {
         photoAdapter = new PhotoAdapter(this, path);
         rvResultPhoto.setAdapter(photoAdapter);
 
+    }
+
+    // 授权管理
+    private void initPermissions() {
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.i(TAG, "需要授权 ");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Log.i(TAG, "拒绝过了");
+                Toast.makeText(mContext, "请在 设置-应用管理 中开启此应用的储存授权。", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.i(TAG, "进行授权");
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+        } else {
+            Log.i(TAG, "不需要授权 ");
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(MainActivity.this);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "同意授权");
+                GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(MainActivity.this);
+            } else {
+                Log.i(TAG, "拒绝授权");
+            }
+        }
     }
 
 

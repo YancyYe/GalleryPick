@@ -55,6 +55,12 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
+        // 设置 每个imageView 的大小
+        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();
+        params.height = ScreenUtils.getScreenWidth(mContext) / 3;
+        params.width = ScreenUtils.getScreenWidth(mContext) / 3;
+        holder.itemView.setLayoutParams(params);
+
         if (getItemViewType(position) == HEAD) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,12 +82,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
         final ViewHolder viewHolder = (ViewHolder) holder;
         galleryConfig.getImageLoader().displayImage(mActivity, mContext, photoInfo.path, viewHolder.ivPhotoImage, ScreenUtils.getScreenWidth(mContext) / 3, ScreenUtils.getScreenWidth(mContext) / 3);
-
-        // 设置 每个imageView 的大小
-        ViewGroup.LayoutParams params = viewHolder.ivPhotoImage.getLayoutParams();
-        params.height = ScreenUtils.getScreenWidth(mContext) / 3;
-        params.width = ScreenUtils.getScreenWidth(mContext) / 3;
-        viewHolder.ivPhotoImage.setLayoutParams(params);
 
 
         if (selectPhoto.contains(photoInfo.path)) {

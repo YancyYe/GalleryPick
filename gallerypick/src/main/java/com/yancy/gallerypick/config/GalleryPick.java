@@ -26,7 +26,7 @@ public class GalleryPick {
     }
 
 
-    public void open(Activity activity) {
+    public void open(Activity mActivity) {
         if (galleryPick.galleryConfig == null) {
             Log.e(TAG, "请配置 GalleryConfig");
             return;
@@ -39,8 +39,9 @@ public class GalleryPick {
             Log.e(TAG, "请配置 IHandlerCallBack");
             return;
         }
-        Intent intent = new Intent(activity, GalleryPickActivity.class);
-        activity.startActivity(intent);
+
+        Intent intent = new Intent(mActivity, GalleryPickActivity.class);
+        mActivity.startActivity(intent);
     }
 
 

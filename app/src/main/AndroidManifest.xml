@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yancy.gallerypickdemo">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"

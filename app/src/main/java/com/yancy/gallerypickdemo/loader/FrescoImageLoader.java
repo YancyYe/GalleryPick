@@ -2,7 +2,6 @@ package com.yancy.gallerypickdemo.loader;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -37,8 +36,7 @@ public class FrescoImageLoader implements ImageLoader {
     public void displayImage(Activity activity, Context context, String path, final GalleryImageView imageView, int width, int height) {
 
 
-        Resources resources = context.getResources();
-        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(resources)
+        GenericDraweeHierarchy hierarchy = new GenericDraweeHierarchyBuilder(context.getResources())
                 .setFadeDuration(300)
                 .setPlaceholderImage(R.mipmap.gallery_pick_photo)   // 占位图
                 .setFailureImage(R.mipmap.gallery_pick_photo)       // 加载失败图
@@ -80,7 +78,7 @@ public class FrescoImageLoader implements ImageLoader {
                 .build();
         ImageRequest imageRequest = ImageRequestBuilder
                 .newBuilderWithSource(uri)
-                .setResizeOptions(new ResizeOptions(width, height))//图片目标大小
+                .setResizeOptions(new ResizeOptions(width, height))
                 .build();
         DraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setOldController(draweeHolder.getController())
