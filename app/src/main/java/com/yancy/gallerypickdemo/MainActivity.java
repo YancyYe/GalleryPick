@@ -82,9 +82,14 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
 
         galleryConfig = new GalleryConfig.Builder()
-                .imageLoader(new GlideImageLoader())
-                .iHandlerCallBack(iHandlerCallBack)
-                .pathList(path)
+                .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
+                .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .pathList(path)                         // 记录已选的图片
+                .multiSelect(true)                      // 是否多选   默认：false
+                .multiSelect(true, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
+                .maxSize(9)                             // 配置多选时 的多选数量。    默认：9
+                .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+                .filePath("/Gallery/Pictures")          // 图片存放路径
                 .build();
 
         btn.setOnClickListener(new View.OnClickListener() {
