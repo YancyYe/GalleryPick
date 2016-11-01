@@ -10,7 +10,9 @@
     android:orientation="vertical"
     tools:context=".activity.GalleryPickActivity">
 
-    <include layout="@layout/gallery_title" />
+    <include
+        android:id="@+id/llGalleryTitle"
+        layout="@layout/gallery_title" />
 
 
     <android.support.v7.widget.RecyclerView

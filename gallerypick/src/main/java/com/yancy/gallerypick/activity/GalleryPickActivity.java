@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yancy.gallerypick.R;
+import com.yancy.gallerypick.adapter.FolderAdapter;
 import com.yancy.gallerypick.adapter.PhotoAdapter;
 import com.yancy.gallerypick.bean.FolderInfo;
 import com.yancy.gallerypick.bean.PhotoInfo;
@@ -27,6 +28,7 @@ import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;
 import com.yancy.gallerypick.utils.FileUtils;
 import com.yancy.gallerypick.utils.UIUtils;
+import com.yancy.gallerypick.widget.FolderListPopupWindow;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,10 +47,13 @@ public class GalleryPickActivity extends BaseActivity {
     private ArrayList<String> resultPhoto;
 
     private TextView tvFinish;                  // 完成按钮
+    private TextView tvGalleryFolder;           // 文件夹按钮
     private LinearLayout btnGalleryPickBack;    // 返回按钮
     private RecyclerView rvGalleryImage;        // 图片列表
 
     private PhotoAdapter photoAdapter;              // 图片适配器
+    private FolderAdapter folderAdapter;            // 文件夹适配器
+
 
     private List<FolderInfo> folderInfoList = new ArrayList<>();    // 本地文件夹信息List
     private List<PhotoInfo> photoInfoList = new ArrayList<>();      // 本地图片信息List
@@ -63,6 +68,10 @@ public class GalleryPickActivity extends BaseActivity {
     private static final int REQUEST_CAMERA = 100;   // 设置拍摄照片的 REQUEST_CODE
 
     private IHandlerCallBack mHandlerCallBack;   // GalleryPick 生命周期接口
+
+    private FolderListPopupWindow folderListPopupWindow;   // 文件夹选择弹出框
+
+    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallback;
 
 
     @Override
@@ -87,6 +96,7 @@ public class GalleryPickActivity extends BaseActivity {
      */
     private void initView() {
         tvFinish = (TextView) super.findViewById(R.id.tvFinish);
+        tvGalleryFolder = (TextView) super.findViewById(R.id.tvGalleryFolder);
         btnGalleryPickBack = (LinearLayout) super.findViewById(R.id.btnGalleryPickBack);
         rvGalleryImage = (RecyclerView) super.findViewById(R.id.rvGalleryImage);
     }
@@ -112,7 +122,7 @@ public class GalleryPickActivity extends BaseActivity {
             }
         });
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
         rvGalleryImage.setLayoutManager(gridLayoutManager);
         photoAdapter = new PhotoAdapter(mActivity, mContext, photoInfoList);
         photoAdapter.setOnCallBack(new PhotoAdapter.OnCallBack() {
@@ -160,15 +170,46 @@ public class GalleryPickActivity extends BaseActivity {
             }
         });
 
+        tvGalleryFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (folderListPopupWindow != null && folderListPopupWindow.isShowing()) {
+                    folderListPopupWindow.dismiss();
+                    return;
+                }
+                folderListPopupWindow = new FolderListPopupWindow(mActivity, mContext, folderAdapter);
+                folderListPopupWindow.showAsDropDown(tvGalleryFolder);
+            }
+        });
+
+        folderAdapter = new FolderAdapter(mActivity, mContext, folderInfoList);
+        folderAdapter.setOnClickListener(new FolderAdapter.OnClickListener() {
+            @Override
+            public void onClick(FolderInfo folderInfo) {
+                if (folderInfo == null) {
+                    getSupportLoaderManager().restartLoader(LOADER_ALL, null, mLoaderCallback);
+                    tvGalleryFolder.setText(R.string.gallery_all_folder);
+                } else {
+                    photoInfoList.clear();
+                    photoInfoList.addAll(folderInfo.photoInfoList);
+                    photoAdapter.notifyDataSetChanged();
+                    tvGalleryFolder.setText(folderInfo.name);
+                }
+                folderListPopupWindow.dismiss();
+                gridLayoutManager.scrollToPosition(0);
+            }
+        });
+
 
     }
+
 
     /**
      * 初始化配置
      */
     private void initPhoto() {
 
-        LoaderManager.LoaderCallbacks<Cursor> mLoaderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
+        mLoaderCallback = new LoaderManager.LoaderCallbacks<Cursor>() {
 
             private final String[] IMAGE_PROJECTION = {
                     MediaStore.Images.Media.DATA,
@@ -299,6 +340,10 @@ public class GalleryPickActivity extends BaseActivity {
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (folderListPopupWindow != null && folderListPopupWindow.isShowing()) {
+                folderListPopupWindow.dismiss();
+                return true;
+            }
             mHandlerCallBack.onCancel();
             exit();
         }

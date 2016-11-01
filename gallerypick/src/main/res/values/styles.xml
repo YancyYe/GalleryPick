@@ -11,4 +11,11 @@
         <item name="android:background">@null</item>
     </style>
 
+
+    <!--PopupWindow动画-->
+    <style name="popupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/in_fade</item>
+        <item name="android:windowExitAnimation">@anim/out_fade</item>
+    </style>
+
 </resources>

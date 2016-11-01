@@ -23,6 +23,16 @@ public class FolderInfo {
         }
         return super.equals(object);
     }
+
+    @Override
+    public String toString() {
+        return "FolderInfo{" +
+                "name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", photoInfo=" + photoInfo +
+                ", photoInfoList=" + photoInfoList +
+                '}';
+    }
 }
 /*
  *   ┏┓　　　┏┓

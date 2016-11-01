@@ -11,6 +11,9 @@
     <color name="gallery_separation">#FFDCDCDC</color>
     <!--灰色字体-->
     <color name="gallery_text_gray">#FF999999</color>
+    <!--字体颜色-->
+    <color name="gallery_text_black">#FF333333</color>
+    <color name="gallery_folder_bg">#88FFFFFF</color>
 
     <!-- 常用颜色 -->
     <color name="gallery_white">#FFFFFFFF</color>

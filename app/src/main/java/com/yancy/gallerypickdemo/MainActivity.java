@@ -12,9 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -92,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!TextUtils.isEmpty(etMulMaxSize.getText().toString()) && Integer.valueOf(etMulMaxSize.getText().toString()) > 0) {
+                    galleryConfig.getBuilder().maxSize(Integer.valueOf(etMulMaxSize.getText().toString())).build();
+                }
                 initPermissions();
             }
         });
@@ -112,25 +113,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 修改多选数量
-        etMulMaxSize.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!TextUtils.isEmpty(s) && Integer.valueOf(s.toString()) > 0) {
-                    galleryConfig.getBuilder().maxSize(Integer.valueOf(s.toString())).build();
-                }
-            }
-        });
 
         // 选择图片加载框架
         rgImageLoader.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

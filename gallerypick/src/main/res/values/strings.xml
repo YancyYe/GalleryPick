@@ -5,5 +5,7 @@
     <string name="gallery_gallery">相册</string>
     <string name="gallery_send">发送</string>
     <string name="gallery_msg_no_camera">没有系统相机</string>
+    <string name="gallery_folder_name">文件夹名</string>
+    <string name="gallery_photo_num">%d 张</string>
 
 </resources>
