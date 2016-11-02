@@ -23,7 +23,7 @@ GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选
 ## 版本说明
 ### 1.0.5
 * 修复直接开启相机所隐藏的bug
-* 新增裁剪功能。[使用方法参考]()
+* 新增裁剪功能。[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)
 
 ## 使用说明
 
@@ -227,7 +227,7 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
 ##旧版本记录
 ### 1.0.4
-* 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#直接开启相机其中有三种方法)）
+* 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#二直接开启相机其中有三种方法)）
 ### 1.0.3
 * 提供单选、多选、以及相机拍照功能。
 * 自定义ImageLoader
