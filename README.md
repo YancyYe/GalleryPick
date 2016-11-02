@@ -21,8 +21,9 @@ GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选
 
 
 ## 版本说明
-### 1.0.4
-* 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#直接开启相机其中有三种方法)）
+### 1.0.5
+* 修复直接开启相机所隐藏的bug
+* 新增裁剪功能。[使用方法参考]()
 
 ## 使用说明
 
@@ -43,7 +44,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.0.4'
+      compile 'com.github.YancyYe:GalleryPick:1.0.5'
 }
 ```
 
@@ -61,7 +62,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 
@@ -148,9 +149,11 @@ GalleryConfig galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
                 .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
                 .pathList(path)                         // 记录已选的图片
-                .multiSelect(true)                      // 是否多选   默认：false
-                .multiSelect(true, 9)                 // 配置是否多选的同时 配置多选数量   默认：false ， 9
+                .multiSelect(false)                      // 是否多选   默认：false
+                .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
                 .maxSize(9)                             // 配置多选时 的多选数量。    默认：9
+                .crop(false)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+                .crop(false, 1, 1, 500, 500)             // 配置裁剪功能的参数，   默认裁剪比例 1:1
                 .isShowCamera(true)                     // 是否现实相机按钮  默认：false
                 .filePath("/Gallery/Pictures")          // 图片存放路径
                 .build();
@@ -168,8 +171,35 @@ GalleryConfig galleryConfig = new GalleryConfig.Builder()
 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
 
-### 其他步骤：
-####直接开启相机，其中有三种方法。
+## 其他功能使用方法说明：
+#### 一：裁剪功能使用说明
+注意：裁剪功能只能在单选时、直接开启相机时生效。
+```groovy
+GalleryConfig galleryConfig = new GalleryConfig.Builder()
+                .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
+                .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .pathList(path)                         // 记录已选的图片
+                .crop(true)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+                .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+                .filePath("/Gallery/Pictures")          // 图片存放路径
+                .build();
+GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
+```
+如果需要自定义裁剪框的比例，可按照以下方法设置：
+```groovy
+GalleryConfig galleryConfig = new GalleryConfig.Builder()
+                .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
+                .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .pathList(path)                         // 记录已选的图片
+                 .crop(true, 1, 1, 500, 500)           // 配置裁剪功能的参数，   默认裁剪比例 1:1
+                .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+                .filePath("/Gallery/Pictures")          // 图片存放路径
+                .build();
+GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
+```
+裁剪图片存放在 `filePath` 文件夹下的 `crop` 目录下。内部创建了忽略文件，手机系统扫描不到此文件目录下的媒体文件，防止裁剪图片显示在相册中，影响心情。
+
+####二：直接开启相机，其中有三种方法。
 #####方法一：
 在 `GalleryConfig` 中设置直接开启相机的标识位。
 ```groovy
@@ -196,9 +226,16 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
 
 ##旧版本记录
-### 1.0.3 正式版本发布
+### 1.0.4
+* 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#直接开启相机其中有三种方法)）
+### 1.0.3
 * 提供单选、多选、以及相机拍照功能。
 * 自定义ImageLoader
+
+
+## 感谢（Thanks）
+* 图片裁剪 [UCrop](https://github.com/jdamcd/android-crop)
+
 
 ## 关于作者
 * Email: [yancy_world@outlook.com](mailto:yancy_world@outlook.com)

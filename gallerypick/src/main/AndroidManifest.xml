@@ -16,6 +16,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/GalleryTheme" />
 
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
     </application>
 
 </manifest>

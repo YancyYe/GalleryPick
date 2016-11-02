@@ -75,5 +75,14 @@ public class FileUtils {
         }
     }
 
+    /**
+     * @param filePath 文件夹路径
+     * @return 截图完成的 file
+     */
+    public static File getCorpFile(String filePath) {
+        String timeStamp = new SimpleDateFormat(PATTERN, Locale.CHINA).format(new Date());
+        return new File(Environment.getExternalStorageDirectory() + filePath + "/crop/" + timeStamp + ".jpg");
+    }
+
 
 }

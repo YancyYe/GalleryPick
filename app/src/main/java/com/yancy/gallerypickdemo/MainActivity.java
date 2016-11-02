@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnOpenCamera;
     private Switch swMulSelect;
     private Switch swShowCamera;
+    private Switch swIsCrop;
     private EditText etMulMaxSize;
     private RecyclerView rvResultPhoto;
     private RadioGroup rgImageLoader;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         btnOpenCamera = (Button) super.findViewById(R.id.btnOpenCamera);
         swMulSelect = (Switch) super.findViewById(R.id.swMulSelect);
         swShowCamera = (Switch) super.findViewById(R.id.swShowCamera);
+        swIsCrop = (Switch) super.findViewById(R.id.swIsCrop);
         etMulMaxSize = (EditText) super.findViewById(R.id.etMulMaxSize);
         rvResultPhoto = (RecyclerView) super.findViewById(R.id.rvResultPhoto);
         rgImageLoader = (RadioGroup) super.findViewById(R.id.rgImageLoader);
@@ -91,10 +93,9 @@ public class MainActivity extends AppCompatActivity {
 //                        .filePath("/Gallery/Pictures")          // 图片存放路径
 //                        .isOpenCamera(true)                    // 直接开启相机的标识位
 //                        .build();
-
 //                GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
-                galleryConfig.getBuilder().isOpenCamera(true).build();
+//                galleryConfig.getBuilder().isOpenCamera(true).build();
 
                 // 如果已配置好  galleryConfig 不想修改：
                 GalleryPick.getInstance().setGalleryConfig(galleryConfig).openCamera(mActivity);
@@ -106,9 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
                 .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
                 .pathList(path)                         // 记录已选的图片
-                .multiSelect(true)                      // 是否多选   默认：false
-                .multiSelect(true, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
+                .multiSelect(false)                      // 是否多选   默认：false
+                .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
                 .maxSize(9)                             // 配置多选时 的多选数量。    默认：9
+                .crop(false)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+                .crop(false, 1, 1, 500, 500)             // 配置裁剪功能的参数，   默认裁剪比例 1:1
                 .isShowCamera(true)                     // 是否现实相机按钮  默认：false
                 .filePath("/Gallery/Pictures")          // 图片存放路径
                 .build();
@@ -119,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(etMulMaxSize.getText().toString()) && Integer.valueOf(etMulMaxSize.getText().toString()) > 0) {
                     galleryConfig.getBuilder().maxSize(Integer.valueOf(etMulMaxSize.getText().toString())).build();
                 }
+                galleryConfig.getBuilder().isOpenCamera(false).build();
                 initPermissions();
             }
         });
@@ -136,6 +140,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 galleryConfig.getBuilder().isShowCamera(isChecked).build();
+            }
+        });
+
+        // 是否裁剪
+        swIsCrop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                galleryConfig.getBuilder().crop(isChecked).build();
             }
         });
 

@@ -69,12 +69,22 @@
         android:layout_below="@+id/rgImageLoader"
         android:text="@string/OpenCamera" />
 
+    <Switch
+        android:id="@+id/swIsCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnOpenCamera"
+        android:checked="false"
+        android:text="@string/isCrop"
+        android:textSize="16sp" />
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvResultPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn"
-        android:layout_below="@+id/btnOpenCamera" />
+        android:layout_below="@+id/swIsCrop" />
 
     <Button
         android:id="@+id/btn"

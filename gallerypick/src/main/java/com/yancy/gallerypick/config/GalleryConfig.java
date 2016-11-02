@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class GalleryConfig {
 
-    private static final String TAG = "GalleryConfig";
-
     private ImageLoader imageLoader;    // 图片加载器
     private IHandlerCallBack iHandlerCallBack;   // GalleryPick 生命周期接口
 
@@ -25,6 +23,12 @@ public class GalleryConfig {
     private ArrayList<String> pathList;      // 已选择照片的路径
     private boolean isOpenCamera;             // 是否直接开启相机    默认：false
 
+    private boolean isCrop;                 // 是否开启裁剪   默认关闭
+    private float aspectRatioX;             // 裁剪比         默认   1：1
+    private float aspectRatioY;             // 裁剪比         默认   1：1
+    private int maxWidth;                   // 最大的裁剪值   默认    500
+    private int maxHeight;                  // 最大的裁剪值   默认    500
+
     private Builder builder;
 
 
@@ -32,6 +36,23 @@ public class GalleryConfig {
         setBuilder(builder);
     }
 
+
+    private void setBuilder(Builder builder) {
+        this.imageLoader = builder.imageLoader;
+        this.iHandlerCallBack = builder.iHandlerCallBack;
+        this.multiSelect = builder.multiSelect;
+        this.maxSize = builder.maxSize;
+        this.isShowCamera = builder.isShowCamera;
+        this.pathList = builder.pathList;
+        this.filePath = builder.filePath;
+        this.isOpenCamera = builder.isOpenCamera;
+        this.isCrop = builder.isCrop;
+        this.aspectRatioX = builder.aspectRatioX;
+        this.aspectRatioY = builder.aspectRatioY;
+        this.maxWidth = builder.maxWidth;
+        this.maxHeight = builder.maxHeight;
+        this.builder = builder;
+    }
 
     public static class Builder implements Serializable {
 
@@ -44,9 +65,30 @@ public class GalleryConfig {
         private int maxSize = 9;
         private boolean isShowCamera = true;
         private String filePath = "/Gallery/Pictures";
+
+        private boolean isCrop = false;
+        private float aspectRatioX = 1;
+        private float aspectRatioY = 1;
+        private int maxWidth = 500;
+        private int maxHeight = 500;
+
         private ArrayList<String> pathList = new ArrayList<>();
 
         private boolean isOpenCamera = false;
+
+        public Builder crop(boolean isCrop) {
+            this.isCrop = isCrop;
+            return this;
+        }
+
+        public Builder crop(boolean isCrop, float aspectRatioX, float aspectRatioY, int maxWidth, int maxHeight) {
+            this.isCrop = isCrop;
+            this.aspectRatioX = aspectRatioX;
+            this.aspectRatioY = aspectRatioY;
+            this.maxWidth = maxWidth;
+            this.maxHeight = maxHeight;
+            return this;
+        }
 
 
         public Builder imageLoader(ImageLoader imageLoader) {
@@ -145,16 +187,24 @@ public class GalleryConfig {
         return isOpenCamera;
     }
 
-    private void setBuilder(Builder builder) {
-        this.imageLoader = builder.imageLoader;
-        this.iHandlerCallBack = builder.iHandlerCallBack;
-        this.multiSelect = builder.multiSelect;
-        this.maxSize = builder.maxSize;
-        this.isShowCamera = builder.isShowCamera;
-        this.pathList = builder.pathList;
-        this.filePath = builder.filePath;
-        this.isOpenCamera = builder.isOpenCamera;
-        this.builder = builder;
+    public int getMaxHeight() {
+        return maxHeight;
+    }
+
+    public boolean isCrop() {
+        return isCrop;
+    }
+
+    public float getAspectRatioX() {
+        return aspectRatioX;
+    }
+
+    public float getAspectRatioY() {
+        return aspectRatioY;
+    }
+
+    public int getMaxWidth() {
+        return maxWidth;
     }
 }
 /*

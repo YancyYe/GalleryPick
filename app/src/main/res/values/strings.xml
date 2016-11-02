@@ -7,6 +7,7 @@
     <string name="isMulSelect">是否开启多选（默认关闭）</string>
     <string name="mulMaxSize">多选时可选图片的数量（默认数量：9）</string>
     <string name="isShowCamera">是否开启相机（默认开启）</string>
+    <string name="isCrop">是否开启裁剪（默认关闭）</string>
     <string name="Glide">Glide</string>
     <string name="Fresco">Fresco</string>
     <string name="Picasso">Picasso</string>

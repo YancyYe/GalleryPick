@@ -12,12 +12,14 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yalantis.ucrop.UCrop;
 import com.yancy.gallerypick.R;
 import com.yancy.gallerypick.adapter.FolderAdapter;
 import com.yancy.gallerypick.adapter.PhotoAdapter;
@@ -27,6 +29,7 @@ import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;
 import com.yancy.gallerypick.utils.FileUtils;
+import com.yancy.gallerypick.utils.UCropUtils;
 import com.yancy.gallerypick.utils.UIUtils;
 import com.yancy.gallerypick.widget.FolderListPopupWindow;
 
@@ -88,7 +91,7 @@ public class GalleryPickActivity extends BaseActivity {
         galleryConfig = GalleryPick.getInstance().getGalleryConfig();
         Intent intent = getIntent();
         boolean isOpenCamera = intent.getBooleanExtra("isOpenCamera", false);
-        if (isOpenCamera || galleryConfig.isShowCamera()) {
+        if (isOpenCamera || galleryConfig.isOpenCamera()) {
             showCameraAction();
         }
 
@@ -147,11 +150,17 @@ public class GalleryPickActivity extends BaseActivity {
                 resultPhoto.clear();
                 resultPhoto.addAll(selectPhotoList);
 
-                if (!galleryConfig.isMultiSelect()) {
-                    if (resultPhoto != null && resultPhoto.size() > 0) {
-                        mHandlerCallBack.onSuccess(resultPhoto);
-                        exit();
+                if (!galleryConfig.isMultiSelect() && resultPhoto != null && resultPhoto.size() > 0) {
+                    if (galleryConfig.isCrop()) {
+                        cameraTempFile = new File(resultPhoto.get(0));
+                        cropTempFile = FileUtils.getCorpFile(galleryConfig.getFilePath());
+                        Log.i(TAG, "OnClickPhoto: " + cameraTempFile.getAbsolutePath());
+                        Log.i(TAG, "OnClickPhoto: " + cropTempFile.getAbsolutePath());
+                        UCropUtils.start(mActivity, cameraTempFile, cropTempFile, galleryConfig.getAspectRatioX(), galleryConfig.getAspectRatioY(), galleryConfig.getMaxWidth(), galleryConfig.getMaxHeight());
+                        return;
                     }
+                    mHandlerCallBack.onSuccess(resultPhoto);
+                    exit();
                 }
 
             }
@@ -293,7 +302,8 @@ public class GalleryPickActivity extends BaseActivity {
     }
 
 
-    private File tempFile;
+    private File cameraTempFile;
+    private File cropTempFile;
 
     /**
      * 选择相机
@@ -304,8 +314,8 @@ public class GalleryPickActivity extends BaseActivity {
         if (cameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
             // 设置系统相机拍照后的输出路径
             // 创建临时文件
-            tempFile = FileUtils.createTmpFile(mActivity, galleryConfig.getFilePath());
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
+            cameraTempFile = FileUtils.createTmpFile(mActivity, galleryConfig.getFilePath());
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cameraTempFile));
             startActivityForResult(cameraIntent, REQUEST_CAMERA);
         } else {
             Toast.makeText(mContext, R.string.gallery_msg_no_camera, Toast.LENGTH_SHORT).show();
@@ -317,19 +327,39 @@ public class GalleryPickActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
             if (resultCode == Activity.RESULT_OK) {
-                if (tempFile != null) {
+                if (cameraTempFile != null) {
                     if (!galleryConfig.isMultiSelect()) {
                         resultPhoto.clear();
+                        if (galleryConfig.isCrop()) {
+                            cropTempFile = FileUtils.getCorpFile(galleryConfig.getFilePath());
+                            UCropUtils.start(mActivity, cameraTempFile, cropTempFile, galleryConfig.getAspectRatioX(), galleryConfig.getAspectRatioY(), galleryConfig.getMaxWidth(), galleryConfig.getMaxHeight());
+                            return;
+                        }
                     }
-                    resultPhoto.add(tempFile.getAbsolutePath());
+                    resultPhoto.add(cameraTempFile.getAbsolutePath());
                     mHandlerCallBack.onSuccess(resultPhoto);
                     exit();
                 }
             } else {
-                if (tempFile != null && tempFile.exists()) {
-                    tempFile.delete();
+                if (cameraTempFile != null && cameraTempFile.exists()) {
+                    cameraTempFile.delete();
+                }
+                if (galleryConfig.isOpenCamera()) {
+                    exit();
                 }
             }
+        } else if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+//            final Uri resultUri = UCrop.getOutput(data);
+            if (cameraTempFile != null && cameraTempFile.exists()) {
+                cameraTempFile.delete();
+            }
+            resultPhoto.clear();
+            resultPhoto.add(cropTempFile.getAbsolutePath());
+            mHandlerCallBack.onSuccess(resultPhoto);
+            exit();
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            galleryConfig.getIHandlerCallBack().onError();
+//            final Throwable cropError = UCrop.getError(data);
         }
 
         super.onActivityResult(requestCode, resultCode, data);
