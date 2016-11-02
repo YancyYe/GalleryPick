@@ -92,6 +92,7 @@ public class GalleryPickActivity extends BaseActivity {
         Intent intent = getIntent();
         boolean isOpenCamera = intent.getBooleanExtra("isOpenCamera", false);
         if (isOpenCamera || galleryConfig.isOpenCamera()) {
+            galleryConfig.getBuilder().isOpenCamera(true).build();
             showCameraAction();
         }
 
@@ -326,7 +327,8 @@ public class GalleryPickActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
-            if (resultCode == Activity.RESULT_OK) {
+            Log.i(TAG, "onActivityResult: " + resultCode);
+            if (resultCode == RESULT_OK) {
                 if (cameraTempFile != null) {
                     if (!galleryConfig.isMultiSelect()) {
                         resultPhoto.clear();

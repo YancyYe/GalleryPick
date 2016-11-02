@@ -1,6 +1,6 @@
 ﻿# GalleryPick 图片选择器 [![](https://jitpack.io/v/YancyYe/GalleryPick.svg)](https://jitpack.io/#YancyYe/GalleryPick)
 
-GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选/多选）、ImageLoader无绑定 任由开发者选择
+GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选/多选）、裁剪、ImageLoader无绑定 任由开发者选择
 
 ###[GitHub 项目地址](https://github.com/YancyYe/GalleryPick)
 
@@ -18,17 +18,17 @@ GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选
 * 图片多选、单选
 * ImageLoader 无绑定，任由开发者选择
 * 可直接开启相机
+* 可裁剪、可旋转
 
 
 ## 版本说明
-### 1.1.0
-* 修复直接开启相机所隐藏的bug
-* 新增裁剪功能。[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)
+### 1.1.1
+* 修复直接开启相机所存在的问题
 
 ## 使用说明
 
 ### 步骤一：
-本开源代码以关联到 [jitpack](https://jitpack.io/#YancyYe/GalleryPick) 网站 ，使用者可以用以下几种方式进行抓取。
+本开源代码以关联到 [`jitpack`](https://jitpack.io/#YancyYe/GalleryPick) 网站 ，使用者可以用以下几种方式进行抓取。
 
 
 #### 通过Gradle使用
@@ -44,7 +44,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.1.0'
+      compile 'com.github.YancyYe:GalleryPick:1.1.1'
 }
 ```
 
@@ -62,7 +62,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 </dependency>
 ```
 
@@ -91,6 +91,7 @@ if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTER
             Log.i(TAG, "不需要授权 ");
             // 进行正常操作
         }
+}
 ```
 
 以下是用户授权反馈
@@ -110,36 +111,35 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String permissi
 
 ### 步骤四：创建监听接口`IHandlerCallBack `
 ```groovy
-	IHandlerCallBack iHandlerCallBack = new IHandlerCallBack() {
-            @Override
-            public void onStart() {
-                Log.i(TAG, "onStart: 开启");
-            }
+IHandlerCallBack iHandlerCallBack = new IHandlerCallBack() {
+           @Override
+           public void onStart() {
+               Log.i(TAG, "onStart: 开启");
+           }
 
-            @Override
-            public void onSuccess(List<String> photoList) {
-                Log.i(TAG, "onSuccess: 返回数据");
-                for (String s : photoList) {
-                    Log.i(TAG, s);
-                }
-            }
+           @Override
+           public void onSuccess(List<String> photoList) {
+               Log.i(TAG, "onSuccess: 返回数据");
+               for (String s : photoList) {
+                   Log.i(TAG, s);
+               }
+           }
 
-            @Override
-            public void onCancel() {
-                Log.i(TAG, "onCancel: 取消");
-            }
+           @Override
+           public void onCancel() {
+               Log.i(TAG, "onCancel: 取消");
+           }
 
-            @Override
-            public void onFinish() {
-                Log.i(TAG, "onFinish: 结束");
-            }
+           @Override
+           public void onFinish() {
+               Log.i(TAG, "onFinish: 结束");
+           }
 
-            @Override
-            public void onError() {
-                Log.i(TAG, "onError: 出错");
+           @Override
+           public void onError() {
+               Log.i(TAG, "onError: 出错");
             }
-        };
-
+};
 ```
 
 ### 步骤五：配置 `GalleryConfig`
@@ -226,8 +226,13 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
 
 ##旧版本记录
+### 1.1.0
+* 修复直接开启相机所隐藏的bug
+* 新增裁剪功能。[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)
+
 ### 1.0.4
 * 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#二直接开启相机其中有三种方法)）
+
 ### 1.0.3
 * 提供单选、多选、以及相机拍照功能。
 * 自定义ImageLoader
