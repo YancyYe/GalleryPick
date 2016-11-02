@@ -21,7 +21,7 @@ GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选
 
 
 ## 版本说明
-### 1.0.5
+### 1.1.0
 * 修复直接开启相机所隐藏的bug
 * 新增裁剪功能。[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)
 
@@ -44,7 +44,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.0.5'
+      compile 'com.github.YancyYe:GalleryPick:1.1.0'
 }
 ```
 
@@ -62,7 +62,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.0.5</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
