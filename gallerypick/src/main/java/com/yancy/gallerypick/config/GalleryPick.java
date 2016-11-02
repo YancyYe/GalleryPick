@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.yancy.gallerypick.activity.GalleryPickActivity;
+import com.yancy.gallerypick.utils.FileUtils;
 
 /**
  * GalleryPick 启动类 (单例)
@@ -40,7 +41,26 @@ public class GalleryPick {
             return;
         }
 
+        FileUtils.createFile(galleryPick.galleryConfig.getFilePath());
+
         Intent intent = new Intent(mActivity, GalleryPickActivity.class);
+        mActivity.startActivity(intent);
+    }
+
+    public void openCamera(Activity mActivity) {
+        if (galleryPick.galleryConfig == null) {
+            Log.e(TAG, "请配置 GalleryConfig");
+            return;
+        }
+        if (galleryPick.galleryConfig.getIHandlerCallBack() == null) {
+            Log.e(TAG, "请配置 IHandlerCallBack");
+            return;
+        }
+
+        FileUtils.createFile(galleryPick.galleryConfig.getFilePath());
+
+        Intent intent = new Intent(mActivity, GalleryPickActivity.class);
+        intent.putExtra("isOpenCamera", true);
         mActivity.startActivity(intent);
     }
 

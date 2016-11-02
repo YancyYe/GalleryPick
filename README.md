@@ -17,12 +17,12 @@ GalleryPick 是 Android自定义相册，实现了拍照、图片选择（单选
 * 解决OOM情况
 * 图片多选、单选
 * ImageLoader 无绑定，任由开发者选择
+* 可直接开启相机
 
 
 ## 版本说明
-### 1.0.3 正式版本发布
-* 提供单选、多选、以及相机拍照功能。
-* 自定义ImageLoader
+### 1.0.4
+* 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#直接开启相机-其中有三种方法)）
 
 ## 使用说明
 
@@ -43,7 +43,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.0.3'
+      compile 'com.github.YancyYe:GalleryPick:1.0.2'
 }
 ```
 
@@ -61,7 +61,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -94,7 +94,7 @@ if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTER
 
 以下是用户授权反馈
 ```groovy
-@Override
+Override
 public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
 	if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
 		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -168,6 +168,37 @@ GalleryConfig galleryConfig = new GalleryConfig.Builder()
 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
 
+### 其他步骤：
+####直接开启相机，其中有三种方法。
+#####方法一：
+在 `GalleryConfig` 中设置直接开启相机的标识位。
+```groovy
+GalleryConfig galleryConfig = new GalleryConfig.Builder()
+          .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+          .filePath("/Gallery/Pictures")          // 图片存放路径   （选填）
+          .isOpenCamera(true)                  // 直接开启相机的标识位
+          .build();
+
+GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
+```
+#####方法二：
+如果已经设置好了 `GalleryConfig` 可以使用单项参数修改的方法来开启相机。
+```groovy
+galleryConfig.getBuilder().isOpenCamera(true).build();
+GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
+```
+#####方法三：
+为了方便使用，在不变动开启相册的`GalleryConfig`的情况下，我还添加了以下方法。
+```groovy
+ GalleryPick.getInstance().setGalleryConfig(galleryConfig).openCamera(mActivity);
+```
+这个方法可以直接使用。不需要在`GalleryConfig`中添加标志位，或者进行单项修改。方便用户使用。
+
+
+##旧版本记录
+### 1.0.3 正式版本发布
+* 提供单选、多选、以及相机拍照功能。
+* 自定义ImageLoader
 
 ## 关于作者
 * Email: [yancy_world@outlook.com](mailto:yancy_world@outlook.com)

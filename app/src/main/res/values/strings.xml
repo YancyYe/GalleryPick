@@ -10,5 +10,6 @@
     <string name="Glide">Glide</string>
     <string name="Fresco">Fresco</string>
     <string name="Picasso">Picasso</string>
+    <string name="OpenCamera">直接开启相机</string>
 
 </resources>

@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Activity mActivity;
 
     private Button btn;
+    private Button btnOpenCamera;
     private Switch swMulSelect;
     private Switch swShowCamera;
     private EditText etMulMaxSize;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         btn = (Button) super.findViewById(R.id.btn);
+        btnOpenCamera = (Button) super.findViewById(R.id.btnOpenCamera);
         swMulSelect = (Switch) super.findViewById(R.id.swMulSelect);
         swShowCamera = (Switch) super.findViewById(R.id.swShowCamera);
         etMulMaxSize = (EditText) super.findViewById(R.id.etMulMaxSize);
@@ -80,6 +82,25 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void init() {
+
+        btnOpenCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                galleryConfig = new GalleryConfig.Builder()
+//                        .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+//                        .filePath("/Gallery/Pictures")          // 图片存放路径
+//                        .isOpenCamera(true)                    // 直接开启相机的标识位
+//                        .build();
+
+//                GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
+
+                galleryConfig.getBuilder().isOpenCamera(true).build();
+
+                // 如果已配置好  galleryConfig 不想修改：
+                GalleryPick.getInstance().setGalleryConfig(galleryConfig).openCamera(mActivity);
+
+            }
+        });
 
         galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）

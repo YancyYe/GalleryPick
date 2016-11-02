@@ -84,6 +84,14 @@ public class GalleryPickActivity extends BaseActivity {
 
         UIUtils.hideTitleBar(mActivity, R.id.ll_gallery_pick_main);
 
+
+        galleryConfig = GalleryPick.getInstance().getGalleryConfig();
+        Intent intent = getIntent();
+        boolean isOpenCamera = intent.getBooleanExtra("isOpenCamera", false);
+        if (isOpenCamera || galleryConfig.isShowCamera()) {
+            showCameraAction();
+        }
+
         initView();
         init();
         initPhoto();
@@ -105,7 +113,6 @@ public class GalleryPickActivity extends BaseActivity {
      * 初始化
      */
     private void init() {
-        galleryConfig = GalleryPick.getInstance().getGalleryConfig();
         mHandlerCallBack = galleryConfig.getIHandlerCallBack();
         mHandlerCallBack.onStart();
 
@@ -302,6 +309,7 @@ public class GalleryPickActivity extends BaseActivity {
             startActivityForResult(cameraIntent, REQUEST_CAMERA);
         } else {
             Toast.makeText(mContext, R.string.gallery_msg_no_camera, Toast.LENGTH_SHORT).show();
+            galleryConfig.getIHandlerCallBack().onError();
         }
     }
 

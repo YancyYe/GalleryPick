@@ -2,7 +2,6 @@ package com.yancy.gallerypick.config;
 
 import com.yancy.gallerypick.inter.IHandlerCallBack;
 import com.yancy.gallerypick.inter.ImageLoader;
-import com.yancy.gallerypick.utils.FileUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,13 +23,13 @@ public class GalleryConfig {
     private boolean isShowCamera;       // 是否开启相机 默认：true
     private String filePath;            // 拍照以及截图后 存放的位置。    默认：/Gallery/Pictures
     private ArrayList<String> pathList;      // 已选择照片的路径
+    private boolean isOpenCamera;             // 是否直接开启相机    默认：false
 
     private Builder builder;
 
 
     private GalleryConfig(Builder builder) {
         setBuilder(builder);
-        FileUtils.createFile(this.filePath);
     }
 
 
@@ -46,6 +45,8 @@ public class GalleryConfig {
         private boolean isShowCamera = true;
         private String filePath = "/Gallery/Pictures";
         private ArrayList<String> pathList = new ArrayList<>();
+
+        private boolean isOpenCamera = false;
 
 
         public Builder imageLoader(ImageLoader imageLoader) {
@@ -84,6 +85,12 @@ public class GalleryConfig {
             this.filePath = filePath;
             return this;
         }
+
+        public Builder isOpenCamera(boolean isOpenCamera) {
+            this.isOpenCamera = isOpenCamera;
+            return this;
+        }
+
 
         public Builder pathList(List<String> pathList) {
             this.pathList.clear();
@@ -134,6 +141,10 @@ public class GalleryConfig {
         return builder;
     }
 
+    public boolean isOpenCamera() {
+        return isOpenCamera;
+    }
+
     private void setBuilder(Builder builder) {
         this.imageLoader = builder.imageLoader;
         this.iHandlerCallBack = builder.iHandlerCallBack;
@@ -142,6 +153,7 @@ public class GalleryConfig {
         this.isShowCamera = builder.isShowCamera;
         this.pathList = builder.pathList;
         this.filePath = builder.filePath;
+        this.isOpenCamera = builder.isOpenCamera;
         this.builder = builder;
     }
 }

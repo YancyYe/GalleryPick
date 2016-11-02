@@ -62,12 +62,19 @@
 
     </RadioGroup>
 
+    <Button
+        android:id="@+id/btnOpenCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rgImageLoader"
+        android:text="@string/OpenCamera" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvResultPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn"
-        android:layout_below="@+id/rgImageLoader" />
+        android:layout_below="@+id/btnOpenCamera" />
 
     <Button
         android:id="@+id/btn"
