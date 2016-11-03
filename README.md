@@ -27,7 +27,7 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 
 ## 版本说明
 ### 1.1.2
-* 添加通过覆盖资源的方式，修改截图页面的配色。（[使用方法参考](https://github.com/YancyYe/GalleryPick#三深度自定义UI方法)）
+* 添加通过覆盖资源的方式，修改截图页面的配色。（[使用方法参考](https://github.com/YancyYe/GalleryPick#三深度自定义ui方法)）
 
 ## 使用说明
 
