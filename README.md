@@ -10,6 +10,7 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 
 #### Gif展示
 ![单选](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/picture/gif_1.gif) ![多选](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/picture/gif_2.gif)
+![截图](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/picture/gif_3.gif)
 
 
 ## GalleryPick 功能
