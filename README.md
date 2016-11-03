@@ -3,6 +3,8 @@
 GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单选/多选）、裁剪、ImageLoader无绑定 任由开发者选择
 
 ###[GitHub 项目地址](https://github.com/YancyYe/GalleryPick)
+###[下载 APK](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/apk/GalleryPick.apk)
+
 
 #### 图片展示
 ![功能](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/picture/image_1.jpg) ![多选页面](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/picture/image_2.jpg)
@@ -24,8 +26,8 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 
 
 ## 版本说明
-### 1.1.1
-* 修复直接开启相机所存在的问题
+### 1.1.2
+* 添加通过覆盖资源的方式，修改截图页面的配色。（[使用方法参考](https://github.com/YancyYe/GalleryPick#三深度自定义UI方法)）
 
 ## 使用说明
 
@@ -46,7 +48,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.1.1'
+      compile 'com.github.YancyYe:GalleryPick:1.1.2'
 }
 ```
 
@@ -64,7 +66,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
@@ -226,14 +228,37 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
 这个方法可以直接使用。不需要在`GalleryConfig`中添加标志位，或者进行单项修改。方便用户使用。
 
+####三：深度自定义UI方法
+可能有很多用户对 `GalleryPick` 里面的界面还有些不满意。没关系，接下来我来教大家如何自己定义其中的颜色。
+
+下面举个简单的例子：
+#####1）
+我在 `GalleryPick` 中的 `gallery_title.xml` 中设置了标题栏的颜色为 `@color/gallery_blue` 用户可以在 app 中的 `colors.xml` 中定义一个名为 `gallery_blue` 的颜色：
+```groovy
+<resources>
+    <color name="gallery_blue">#FF4081</color>
+</resources>
+```
+这样就达到了覆盖资源文件的效果。从而达到自定义UI。
+
+#####2）
+有些朋友会问，我标题栏设置了白色，但是标题栏的字体和图标也是白色的，那该怎么办？
+下面来讲一下方法，因为是覆盖资源文件，所以在 app 中创建 `gallery_title.xml` , 先将 `GalleryPick` 中的 `gallery_title.xml`   代码copy过去，然后就简单了。将`TextView`的`textColor`中的颜色颜色换一下就好了。同样，返回按钮可以改变一下 `ImageView`的`src`，很简单。
+
+
+
+
 
 ##旧版本记录
+### 1.1.1
+* 修复直接开启相机所存在的问题
+
 ### 1.1.0
 * 修复直接开启相机所隐藏的bug
-* 新增裁剪功能。[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)
+* 新增裁剪功能。（[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)）
 
 ### 1.0.4
-* 应使用者需求添加直接开启相机的方法。 （[使用方法](https://github.com/YancyYe/GalleryPick#二直接开启相机其中有三种方法)）
+* 应使用者需求添加直接开启相机的方法。 （[使用方法参考](https://github.com/YancyYe/GalleryPick#二直接开启相机其中有三种方法)）
 
 ### 1.0.3
 * 提供单选、多选、以及相机拍照功能。
