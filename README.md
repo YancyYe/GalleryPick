@@ -2,6 +2,8 @@
 
 GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单选/多选）、裁剪、ImageLoader无绑定 任由开发者选择
 
+##### 各位的 star 就是对我最大的支持。
+
 ###[GitHub 项目地址](https://github.com/YancyYe/GalleryPick)
 ###[下载 APK](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/apk/GalleryPick.apk)
 

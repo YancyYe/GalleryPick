@@ -352,9 +352,9 @@ public class GalleryPickActivity extends BaseActivity {
             }
         } else if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
 //            final Uri resultUri = UCrop.getOutput(data);
-            if (cameraTempFile != null && cameraTempFile.exists()) {
-                cameraTempFile.delete();
-            }
+//            if (cameraTempFile != null && cameraTempFile.exists()) {
+//                cameraTempFile.delete();
+//            }
             resultPhoto.clear();
             resultPhoto.add(cropTempFile.getAbsolutePath());
             mHandlerCallBack.onSuccess(resultPhoto);

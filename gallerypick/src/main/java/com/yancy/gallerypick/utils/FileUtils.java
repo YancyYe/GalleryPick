@@ -63,7 +63,7 @@ public class FileUtils {
                 cropFile.mkdirs();
             }
 
-            File file = new File(cropFile, ".nomedia");    // 创建忽视文件。   有该文件，系统将检索不到此文件夹下的图片。
+            File file = new File(dir, ".nomedia");    // 创建忽视文件。   有该文件，系统将检索不到此文件夹下的图片。
             if (!file.exists()) {
                 try {
                     file.createNewFile();
