@@ -127,7 +127,6 @@ public class GalleryPickActivity extends BaseActivity {
         btnGalleryPickBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
                 mHandlerCallBack.onCancel();
                 exit();
             }
@@ -155,8 +154,6 @@ public class GalleryPickActivity extends BaseActivity {
                     if (galleryConfig.isCrop()) {
                         cameraTempFile = new File(resultPhoto.get(0));
                         cropTempFile = FileUtils.getCorpFile(galleryConfig.getFilePath());
-                        Log.i(TAG, "OnClickPhoto: " + cameraTempFile.getAbsolutePath());
-                        Log.i(TAG, "OnClickPhoto: " + cropTempFile.getAbsolutePath());
                         UCropUtils.start(mActivity, cameraTempFile, cropTempFile, galleryConfig.getAspectRatioX(), galleryConfig.getAspectRatioY(), galleryConfig.getMaxWidth(), galleryConfig.getMaxHeight());
                         return;
                     }
@@ -287,6 +284,19 @@ public class GalleryPickActivity extends BaseActivity {
 
                         photoInfoList.clear();
                         photoInfoList.addAll(tempPhotoList);
+
+                        List<String> tempPhotoPathList = new ArrayList<>();
+                        for (PhotoInfo photoInfo : photoInfoList) {
+                            tempPhotoPathList.add(photoInfo.path);
+                        }
+                        for (String mPhotoPath : galleryConfig.getPathList()) {
+                            if (!tempPhotoPathList.contains(mPhotoPath)) {
+                                PhotoInfo photoInfo = new PhotoInfo(mPhotoPath, null, 0L);
+                                photoInfoList.add(0, photoInfo);
+                            }
+                        }
+
+
                         photoAdapter.notifyDataSetChanged();
 
                         hasFolderScan = true;
