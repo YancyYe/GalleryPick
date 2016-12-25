@@ -16,6 +16,10 @@ public class PhotoInfo {
         this.time = time;
     }
 
+
+
+
+
     @Override
     public String toString() {
         return "PhotoInfo{" +
