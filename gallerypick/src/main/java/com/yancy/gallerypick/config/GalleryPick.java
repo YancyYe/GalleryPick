@@ -74,6 +74,10 @@ public class GalleryPick {
         return galleryConfig;
     }
 
+    public void clearHandlerCallBack() {
+        galleryConfig.getBuilder().iHandlerCallBack(null).build();
+    }
+
 }
 /*
  *   ┏┓　　　┏┓
