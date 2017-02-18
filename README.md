@@ -28,8 +28,10 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 
 
 ## 版本说明
-### 1.1.7
-* 修复android 4.x 打开相机崩溃的bug
+### 1.1.8
+* 优化 `Provider` 防止两个以上 App 使用 `GalleryPick`会出现安装不上的问题。
+（[修改详情](https://github.com/YancyYe/GalleryPick#步骤三设置 Provider)）
+
 
 ## 使用说明
 
@@ -50,7 +52,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.1.7'
+      compile 'com.github.YancyYe:GalleryPick:1.1.8'
 }
 ```
 
@@ -68,7 +70,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
 </dependency>
 ```
 
@@ -79,7 +81,42 @@ dependencies {
 ####[使用Picasso加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/PicassoImageLoader.java)
 ####[使用Fresco加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/FrescoImageLoader.java)
 
-### 步骤三：申请权限
+###步骤三：设置 Provider
+请在 app 中的 `AndroidManifest` 中的`application`标签下添加
+```groovy
+ <provider
+    android:name="android.support.v4.content.FileProvider"
+    android:authorities="com.yancy.gallerypickdemo.fileprovider"
+    android:exported="false"
+    android:grantUriPermissions="true">
+    <meta-data
+        android:name="android.support.FILE_PROVIDER_PATHS"
+        android:resource="@xml/filepaths" />
+</provider>
+```
+`provider` 中的 `authorities` 可以自己定义为 provider所在的包的名字+provider本身定义的名称  （如果一个设备中出现两个同样的`authorities`会出现无法安装的情况）
+
+在`res` 中创建`xml`文件夹，在其中创建文件。文件名自己定义。demo中定义了`filepaths.xml`。
+```groovy
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <external-path
+            name="pictures"
+            path="" />
+    </paths>
+</resources>
+```
+`FileProvider` 中设置的内容我就不介绍了，网上一搜一大片。
+
+最后，在设置`GalleryConfig` 的时候，设置`provider`，内容为你之前在`AndroidManifest`中的`provider`中的`authorities`设置的值。demo中为：`com.yancy.gallerypickdemo.fileprovider`
+[GalleryConfig代码示例](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/MainActivity.java)
+[AndroidManifest代码示例](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/AndroidManifest.xml)
+[filepaths.xml代码示例](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/res/xml/filepaths.xml)
+
+（[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)）
+
+### 步骤四：申请权限
 代码示例：
 在点击开启相册按钮时：
 ```groovy
@@ -115,7 +152,7 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String permissi
 }
 ```
 
-### 步骤四：创建监听接口`IHandlerCallBack `
+### 步骤五：创建监听接口`IHandlerCallBack `
 ```groovy
 IHandlerCallBack iHandlerCallBack = new IHandlerCallBack() {
            @Override
@@ -148,12 +185,13 @@ IHandlerCallBack iHandlerCallBack = new IHandlerCallBack() {
 };
 ```
 
-### 步骤五：配置 `GalleryConfig`
+### 步骤六：配置 `GalleryConfig`
 可先进行初始配置，除了`ImageLoader` 和 `IHandlerCallBack`之外，其他都是选填，都有默认值。
 ```groovy
 GalleryConfig galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
                 .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .provider("com.yancy.gallerypickdemo.fileprovider")   // provider (必填)
                 .pathList(path)                         // 记录已选的图片
                 .multiSelect(false)                      // 是否多选   默认：false
                 .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
@@ -172,7 +210,7 @@ GalleryConfig galleryConfig = new GalleryConfig.Builder()
   galleryConfig.getBuilder().imageLoader(new PicassoImageLoader()).build(); // 修改图片加载框架
 ```
 
-### 步骤六：启动`GalleryPick`图片选择器
+### 步骤七：启动`GalleryPick`图片选择器
 ```groovy
 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
@@ -184,6 +222,7 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 GalleryConfig galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
                 .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .provider("com.yancy.gallerypickdemo.fileprovider")   // provider (必填)
                 .pathList(path)                         // 记录已选的图片
                 .crop(true)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
                 .isShowCamera(true)                     // 是否现实相机按钮  默认：false
@@ -196,8 +235,9 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 GalleryConfig galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
                 .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .provider("com.yancy.gallerypickdemo.fileprovider")   // provider (必填)
                 .pathList(path)                         // 记录已选的图片
-                 .crop(true, 1, 1, 500, 500)           // 配置裁剪功能的参数，   默认裁剪比例 1:1
+                .crop(true, 1, 1, 500, 500)           // 配置裁剪功能的参数，   默认裁剪比例 1:1
                 .isShowCamera(true)                     // 是否现实相机按钮  默认：false
                 .filePath("/Gallery/Pictures")          // 图片存放路径
                 .build();
@@ -252,6 +292,9 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
 
 ##旧版本记录
+### 1.1.7
+* 修复android 4.x 打开相机崩溃的bug
+
 ### 1.1.6
 * 修复android 7.x 打开相机崩溃的bug
 
