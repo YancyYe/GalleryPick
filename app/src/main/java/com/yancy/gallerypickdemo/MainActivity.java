@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         galleryConfig = new GalleryConfig.Builder()
                 .imageLoader(new GlideImageLoader())    // ImageLoader 加载框架（必填）
                 .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
-                .provider("com.yancy.gallerypickdemo.fileprovider")   // (必填)
+                .provider("com.yancy.gallerypickdemo.fileprovider")   // provider(必填)
                 .pathList(path)                         // 记录已选的图片
                 .multiSelect(false)                      // 是否多选   默认：false
                 .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
