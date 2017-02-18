@@ -30,7 +30,7 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 ## 版本说明
 ### 1.1.8
 * 优化 `Provider` 防止两个以上 App 使用 `GalleryPick`会出现安装不上的问题。
-（[修改详情](https://github.com/YancyYe/GalleryPick#步骤三设置 Provider)）
+（[修改详情](https://github.com/YancyYe/GalleryPick#步骤三设置-provider)）
 
 
 ## 使用说明
