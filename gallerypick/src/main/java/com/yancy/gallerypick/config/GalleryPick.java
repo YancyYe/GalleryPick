@@ -2,6 +2,7 @@ package com.yancy.gallerypick.config;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.yancy.gallerypick.activity.GalleryPickActivity;
@@ -40,6 +41,10 @@ public class GalleryPick {
             Log.e(TAG, "请配置 IHandlerCallBack");
             return;
         }
+        if (TextUtils.isEmpty(galleryPick.galleryConfig.getProvider())) {
+            Log.e(TAG, "请配置 Provider");
+            return;
+        }
 
         FileUtils.createFile(galleryPick.galleryConfig.getFilePath());
 
@@ -52,8 +57,16 @@ public class GalleryPick {
             Log.e(TAG, "请配置 GalleryConfig");
             return;
         }
+        if (galleryPick.galleryConfig.getImageLoader() == null) {
+            Log.e(TAG, "请配置 ImageLoader");
+            return;
+        }
         if (galleryPick.galleryConfig.getIHandlerCallBack() == null) {
             Log.e(TAG, "请配置 IHandlerCallBack");
+            return;
+        }
+        if (TextUtils.isEmpty(galleryPick.galleryConfig.getProvider())) {
+            Log.e(TAG, "请配置 Provider");
             return;
         }
 

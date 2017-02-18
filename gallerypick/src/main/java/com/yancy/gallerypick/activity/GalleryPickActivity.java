@@ -329,7 +329,7 @@ public class GalleryPickActivity extends BaseActivity {
             // 设置系统相机拍照后的输出路径
             // 创建临时文件
             cameraTempFile = FileUtils.createTmpFile(mActivity, galleryConfig.getFilePath());
-            Uri imageUri = FileProvider.getUriForFile(mContext, "com.yancy.gallerypick.fileprovider", cameraTempFile);
+            Uri imageUri = FileProvider.getUriForFile(mContext, galleryConfig.getProvider(), cameraTempFile);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
             cameraIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
