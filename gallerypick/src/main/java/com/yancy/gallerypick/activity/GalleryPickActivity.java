@@ -15,7 +15,6 @@ import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -92,6 +91,11 @@ public class GalleryPickActivity extends BaseActivity {
 
 
         galleryConfig = GalleryPick.getInstance().getGalleryConfig();
+        if (galleryConfig == null) {
+            exit();
+            return;
+        }
+
         Intent intent = getIntent();
         boolean isOpenCamera = intent.getBooleanExtra("isOpenCamera", false);
         if (isOpenCamera || galleryConfig.isOpenCamera()) {
@@ -349,7 +353,6 @@ public class GalleryPickActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CAMERA) {
-            Log.i(TAG, "onActivityResult: " + resultCode);
             if (resultCode == RESULT_OK) {
                 if (cameraTempFile != null) {
                     if (!galleryConfig.isMultiSelect()) {
@@ -361,6 +364,13 @@ public class GalleryPickActivity extends BaseActivity {
                         }
                     }
                     resultPhoto.add(cameraTempFile.getAbsolutePath());
+
+                    // 通知系统扫描该文件夹
+                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    Uri uri = Uri.fromFile(new File(FileUtils.getFilePath(mContext) + galleryConfig.getFilePath()));
+                    intent.setData(uri);
+                    sendBroadcast(intent);
+
                     mHandlerCallBack.onSuccess(resultPhoto);
                     exit();
                 }

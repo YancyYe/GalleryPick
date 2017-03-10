@@ -63,7 +63,7 @@ public class FileUtils {
                 cropFile.mkdirs();
             }
 
-            File file = new File(dir, ".nomedia");    // 创建忽视文件。   有该文件，系统将检索不到此文件夹下的图片。
+            File file = new File(cropFile, ".nomedia");    // 创建忽视文件。   有该文件，系统将检索不到此文件夹下的图片。
             if (!file.exists()) {
                 try {
                     file.createNewFile();
@@ -74,6 +74,17 @@ public class FileUtils {
 
         }
     }
+
+
+    public static String getFilePath(Context context) {
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            return Environment.getExternalStorageDirectory().getPath();
+        } else {
+            return context.getCacheDir().getAbsolutePath();
+        }
+    }
+
 
     /**
      * @param filePath 文件夹路径
