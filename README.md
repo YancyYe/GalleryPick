@@ -28,9 +28,8 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 
 
 ## 版本说明
-### 1.1.8
-* 优化 `Provider` 防止两个以上 App 使用 `GalleryPick`会出现安装不上的问题。
-（[修改详情](https://github.com/YancyYe/GalleryPick#步骤三设置-provider)）
+### 1.2.0
+* 忽略裁剪图片，返回相机拍摄的照片。
 
 
 ## 使用说明
@@ -52,7 +51,7 @@ allprojects {
 在 `app` 的 `build.gradle` 中 添加：
 ```groovy
 dependencies {
-      compile 'com.github.YancyYe:GalleryPick:1.1.8'
+      compile 'com.github.YancyYe:GalleryPick:1.2.0'
 }
 ```
 
@@ -70,7 +69,7 @@ dependencies {
 <dependency>
     <groupId>com.github.YancyYe</groupId>
     <artifactId>GalleryPick</artifactId>
-    <version>1.1.8</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
@@ -292,6 +291,10 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
 
 ##旧版本记录
+### 1.1.8
+* 优化 `Provider` 防止两个以上 App 使用 `GalleryPick`会出现安装不上的问题。
+（[修改详情](https://github.com/YancyYe/GalleryPick#步骤三设置-provider)）
+
 ### 1.1.7
 * 修复android 4.x 打开相机崩溃的bug
 
