@@ -403,7 +403,9 @@ public class GalleryPickActivity extends BaseActivity {
      * 退出
      */
     private void exit() {
-        mHandlerCallBack.onFinish();
+        if (mHandlerCallBack != null) {
+            mHandlerCallBack.onFinish();
+        }
         finish();
     }
 
