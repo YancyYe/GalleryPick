@@ -4,8 +4,8 @@ GalleryPick 是 Android 自定义相册，实现了拍照、图片选择（单�
 
 ##### 各位的 star 就是对我最大的支持。
 
-###[GitHub 项目地址](https://github.com/YancyYe/GalleryPick)
-###[下载 APK](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/apk/GalleryPick.apk)
+### [GitHub 项目地址](https://github.com/YancyYe/GalleryPick)
+### [下载 APK](https://raw.githubusercontent.com/YancyYe/GalleryPick/master/apk/GalleryPick.apk)
 
 
 #### 图片展示
@@ -75,15 +75,15 @@ dependencies {
 
 ### 步骤二：创建 图片加载器 (其中可以按照 喜好  使用不同的 第三方图片)
 
-####示例：
+#### 示例：
 
-####[使用Glide加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/GlideImageLoader.java)
+#### [使用Glide加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/GlideImageLoader.java)
 
-####[使用Picasso加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/PicassoImageLoader.java)
+#### [使用Picasso加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/PicassoImageLoader.java)
 
-####[使用Fresco加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/FrescoImageLoader.java)
+#### [使用Fresco加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/FrescoImageLoader.java)
 
-###步骤三：设置 Provider
+### 步骤三：设置 Provider
 请在 app 中的 `AndroidManifest` 中的`application`标签下添加
 ```groovy
  <provider
@@ -253,8 +253,8 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
 裁剪图片存放在 `filePath` 文件夹下的 `crop` 目录下。内部创建了忽略文件，手机系统扫描不到此文件目录下的媒体文件，防止裁剪图片显示在相册中，影响心情。
 
-####二：直接开启相机，其中有三种方法。
-#####方法一：
+#### 二：直接开启相机，其中有三种方法。
+##### 方法一：
 在 `GalleryConfig` 中设置直接开启相机的标识位。
 ```groovy
 GalleryConfig galleryConfig = new GalleryConfig.Builder()
@@ -265,24 +265,24 @@ GalleryConfig galleryConfig = new GalleryConfig.Builder()
 
 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
-#####方法二：
+##### 方法二：
 如果已经设置好了 `GalleryConfig` 可以使用单项参数修改的方法来开启相机。
 ```groovy
 galleryConfig.getBuilder().isOpenCamera(true).build();
 GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
-#####方法三：
+##### 方法三：
 为了方便使用，在不变动开启相册的`GalleryConfig`的情况下，我还添加了以下方法。
 ```groovy
  GalleryPick.getInstance().setGalleryConfig(galleryConfig).openCamera(mActivity);
 ```
 这个方法可以直接使用。不需要在`GalleryConfig`中添加标志位，或者进行单项修改。方便用户使用。
 
-####三：深度自定义UI方法
+#### 三：深度自定义UI方法
 可能有很多用户对 `GalleryPick` 里面的界面还有些不满意。没关系，接下来我来教大家如何自己定义其中的颜色。
 
 下面举个简单的例子：
-#####1）
+##### 1）
 我在 `GalleryPick` 中的 `gallery_title.xml` 中设置了标题栏的颜色为 `@color/gallery_blue` 用户可以在 app 中的 `colors.xml` 中定义一个名为 `gallery_blue` 的颜色：
 ```groovy
 <resources>
@@ -291,7 +291,7 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 ```
 这样就达到了覆盖资源文件的效果。从而达到自定义UI。
 
-#####2）
+##### 2）
 有些朋友会问，我标题栏设置了白色，但是标题栏的字体和图标也是白色的，那该怎么办？
 下面来讲一下方法，因为是覆盖资源文件，所以在 app 中创建 `gallery_title.xml` , 先将 `GalleryPick` 中的 `gallery_title.xml`   代码copy过去，然后就简单了。将`TextView`的`textColor`中的颜色颜色换一下就好了。同样，返回按钮可以改变一下 `ImageView`的`src`，很简单。
 
@@ -299,7 +299,7 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
 
 
-##旧版本记录
+## 旧版本记录
 ### 1.2.0
 * 忽略裁剪图片，返回相机拍摄的照片。
 
@@ -345,4 +345,4 @@ GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 * Email: [yancy_world@outlook.com](mailto:yancy_world@outlook.com)
 
 
-###[旧项目地址](https://github.com/YancyYe/ImageSelector)
+### [旧项目地址](https://github.com/YancyYe/ImageSelector)
