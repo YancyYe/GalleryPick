@@ -76,8 +76,11 @@ dependencies {
 ### 步骤二：创建 图片加载器 (其中可以按照 喜好  使用不同的 第三方图片)
 
 ####示例：
+
 ####[使用Glide加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/GlideImageLoader.java)
+
 ####[使用Picasso加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/PicassoImageLoader.java)
+
 ####[使用Fresco加载](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/loader/FrescoImageLoader.java)
 
 ###步骤三：设置 Provider
