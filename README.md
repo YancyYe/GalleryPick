@@ -118,8 +118,11 @@ dependencies {
 `FileProvider` 中设置的内容我就不介绍了，网上一搜一大片。
 
 最后，在设置`GalleryConfig` 的时候，设置`provider`，内容为你之前在`AndroidManifest`中的`provider`中的`authorities`设置的值。demo中为：`com.yancy.gallerypickdemo.fileprovider`
+
 [GalleryConfig代码示例](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/java/com/yancy/gallerypickdemo/MainActivity.java)
+
 [AndroidManifest代码示例](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/AndroidManifest.xml)
+
 [filepaths.xml代码示例](https://github.com/YancyYe/GalleryPick/blob/master/app/src/main/res/xml/filepaths.xml)
 
 （[使用方法参考](https://github.com/YancyYe/GalleryPick#一裁剪功能使用说明)）
